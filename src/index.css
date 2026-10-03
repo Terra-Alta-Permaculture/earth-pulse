@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-soil-950 text-sand-100 font-sans;
+    background-image:
+      radial-gradient(60rem 40rem at 15% -10%, rgba(209, 143, 54, 0.06), transparent 60%),
+      radial-gradient(60rem 40rem at 85% 110%, rgba(90, 157, 72, 0.07), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-soil-700/70 bg-soil-900/60 backdrop-blur-sm;
+  }
+  .stat-num {
+    @apply font-display tabular-nums tracking-tight;
+  }
+  .eyebrow {
+    @apply text-[0.7rem] font-medium uppercase tracking-[0.18em] text-sand-500;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #333b33;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

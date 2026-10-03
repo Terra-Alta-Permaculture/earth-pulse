@@ -1,0 +1,26 @@
+-- EarthPulse World Pulse — weekly cron for the geopolitics writer.
+-- TEMPLATE: fill in the two placeholders and run in the Supabase SQL editor.
+-- Requires pg_cron + pg_net (Dashboard → Database → Extensions, or below).
+
+create extension if not exists pg_cron;
+create extension if not exists pg_net;
+
+-- Run every Sunday at 18:00 UTC.
+select cron.schedule(
+  'earthpulse-world-weekly',
+  '0 18 * * 0',
+  $$
+  select net.http_post(
+    url     := 'https://<PROJECT_REF>.supabase.co/functions/v1/earthpulse-world-weekly',
+    headers := jsonb_build_object(
+      'Content-Type', 'application/json',
+      'Authorization', 'Bearer <SERVICE_ROLE_KEY>'
+    ),
+    body    := '{}'::jsonb
+  );
+  $$
+);
+
+-- Inspect / remove:
+--   select * from cron.job where jobname = 'earthpulse-world-weekly';
+--   select cron.unschedule('earthpulse-world-weekly');
