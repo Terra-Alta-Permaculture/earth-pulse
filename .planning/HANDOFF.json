@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "timestamp": "2026-10-03T21:10:26.864Z",
+  "timestamp": "2026-10-03T21:27:50.117Z",
   "source": "auto-postool",
-  "partial": true,
+  "partial": false,
   "phase": null,
   "phase_name": null,
   "phase_dir": null,
@@ -15,7 +15,32 @@
   "blockers": [],
   "human_actions_pending": [],
   "decisions": [],
-  "uncommitted_files": [],
+  "uncommitted_files": [
+    {
+      "status": "M",
+      "path": ".planning/HANDOFF.json"
+    },
+    {
+      "status": "M",
+      "path": "api/world-refresh.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/components/world/SignpostTimeline.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/data/forces.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/data/worldSeed.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/types.ts"
+    }
+  ],
   "next_action": null,
-  "context_notes": ""
+  "context_notes": "Recent commits:\n965032e EarthPulse: all-live planetary intelligence dashboard"
 }

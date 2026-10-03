@@ -212,6 +212,44 @@ export const worldReadingsSeed: WorldReading[] = [
       { title: 'NASA — Artemis Accords', url: 'https://www.nasa.gov/artemis-accords/' },
     ],
   },
+  {
+    week_start: SEED_WEEK_START,
+    force_key: 'israel_us',
+    tension: 7.5,
+    direction: 'flat',
+    headline: 'Gaza, unwavering US backing, and a fracturing world consensus',
+    what_changed:
+      'The Gaza war and its regional spillover remain the Middle East’s central fault line, with the US continuing to supply and shield Israel diplomatically. The ICJ genocide case and ICC arrest-warrant proceedings press on; large protests and shifting public opinion ripple through Western capitals; and Gulf normalisation talks stall and restart against the violence.',
+    counterpoint:
+      'Ceasefire-and-hostage frameworks and surges of humanitarian aid keep being negotiated, and a growing number of states have recognised Palestinian statehood.',
+    indicators: [
+      { label: 'US military aid to Israel', value: '~$3.8', unit: 'bn/yr (baseline)', as_of: '2026' },
+      { label: 'States recognising Palestine', value: '~150', as_of: '2026' },
+    ],
+    sources: [
+      { title: 'UN OCHA — occupied Palestinian territory', url: 'https://www.ochaopt.org/' },
+      { title: 'ICJ — case list', url: 'https://www.icj-cij.org/cases' },
+    ],
+  },
+  {
+    week_start: SEED_WEEK_START,
+    force_key: 'elites',
+    tension: 6.0,
+    direction: 'flat',
+    headline: 'Wealth and power keep concentrating at the very top',
+    what_changed:
+      'The richest 1% hold more than the bottom 95% combined, billionaire wealth keeps rising faster than the economy, and lobbying, media ownership and campaign finance channel outsized influence to a small elite. State capture and revolving doors blur the line between private fortune and public policy.',
+    counterpoint:
+      'A G20 push for a coordinated minimum tax on billionaires is on the table, and several countries are debating wealth taxes and tighter lobbying and transparency rules.',
+    indicators: [
+      { label: 'Richest 10% share of global income', value: '~52', unit: '%', as_of: '2022', source_url: 'https://wir2022.wid.world/' },
+      { label: 'Billionaire wealth', value: '~15', unit: '$tn', as_of: '2026' },
+    ],
+    sources: [
+      { title: 'World Inequality Report', url: 'https://wir2022.wid.world/' },
+      { title: 'Oxfam — inequality', url: 'https://www.oxfam.org/en/tags/inequality' },
+    ],
+  },
 ]
 
 export const worldSignpostsSeed: WorldSignpost[] = [

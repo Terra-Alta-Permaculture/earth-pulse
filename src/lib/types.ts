@@ -65,7 +65,7 @@ export interface AdviceResponse {
 export type ForceKey =
   | 'us_power' | 'us_china' | 'chokepoints_energy' | 'russia_europe'
   | 'institutions' | 'living_planet' | 'identity_religion' | 'ai' | 'money_trade'
-  | 'space_orbit'
+  | 'space_orbit' | 'israel_us' | 'elites'
 
 export interface WorldIndicator {
   label: string

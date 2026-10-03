@@ -19,6 +19,8 @@ export const FORCES: ForceMeta[] = [
   { key: 'ai', title: 'Artificial intelligence', blurb: 'Compute concentration, chip controls, military AI, model access, rules.', icon: '🤖' },
   { key: 'money_trade', title: 'Money, trade & sanctions', blurb: 'Dollar share, US debt, sanctions, frozen assets, trade, debt distress.', icon: '💱' },
   { key: 'space_orbit', title: 'Space race & orbit', blurb: 'Military space, satellite mega-constellations, a legal vacuum, and orbital debris.', icon: '🛰️' },
+  { key: 'israel_us', title: 'Israel, the US & the world', blurb: 'Gaza, US backing, regional escalation, and the world’s response — courts, protests, normalisation.', icon: '🕊️' },
+  { key: 'elites', title: 'The ruling elites', blurb: 'Concentration of wealth and power — billionaires, lobbying, media and state capture.', icon: '🎩' },
 ]
 
 export const forceByKey = Object.fromEntries(

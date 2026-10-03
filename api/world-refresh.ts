@@ -1,5 +1,5 @@
 // EarthPulse — World Pulse weekly writer (Vercel Cron target).
-// Two-step for reliability: (1) research the ten forces with Claude + web
+// Two-step for reliability: (1) research the twelve forces with Claude + web
 // search → plain-text findings; (2) a second call with FORCED tool-use turns the
 // findings into guaranteed-valid JSON. Saves the week to Vercel Blob (26-week
 // history). No database.
@@ -20,7 +20,7 @@ const MAX_WEEKS = 26
 const FORCE_KEYS = [
   'us_power', 'us_china', 'chokepoints_energy', 'russia_europe',
   'institutions', 'living_planet', 'identity_religion', 'ai', 'money_trade',
-  'space_orbit',
+  'space_orbit', 'israel_us', 'elites',
 ]
 
 function isoMonday(d = new Date()): string {
@@ -40,7 +40,7 @@ function headers() {
 }
 
 // ── Step 1: research with web search → plain-text findings ────────────
-const RESEARCH_SYSTEM = `You are EarthPulse's geopolitics researcher. Research the LAST 7 DAYS across ten forces (us_power, us_china, chokepoints_energy, russia_europe, institutions, living_planet, identity_religion, ai, money_trade, space_orbit). space_orbit = the space race and orbit: military/anti-satellite activity, satellite mega-constellations, the near-absence of binding space law, Moon/resource competition, and orbital debris. Prefer primary/major sources (Reuters, AP, Al Jazeera, BBC, FT, IEA, IMF, WMO, Copernicus, FAO, UN, Crisis Group, SIPRI, ESA, UNOOSA). Be politically neutral.`
+const RESEARCH_SYSTEM = `You are EarthPulse's geopolitics researcher. Research the LAST 7 DAYS across twelve forces (us_power, us_china, chokepoints_energy, russia_europe, institutions, living_planet, identity_religion, ai, money_trade, space_orbit, israel_us, elites). space_orbit = the space race and orbit: military/anti-satellite activity, mega-constellations, the near-absence of binding space law, Moon/resource competition, orbital debris. israel_us = Israel, the US and the world: Gaza and regional escalation, US military/diplomatic backing, ICJ/ICC proceedings, protests and shifting opinion, normalisation talks, Palestinian recognition. elites = the ruling elites: concentration of wealth and power — billionaire wealth, lobbying and campaign finance, media ownership, tax policy, state capture and revolving doors. Prefer primary/major sources (Reuters, AP, Al Jazeera, BBC, FT, IEA, IMF, WMO, Copernicus, FAO, UN, OCHA, ICJ, Crisis Group, SIPRI, ESA, UNOOSA, World Inequality Lab, Oxfam). Be politically neutral and factual.`
 
 async function research(user: string): Promise<string> {
   let messages: any[] = [{ role: 'user', content: user }]
@@ -77,8 +77,8 @@ const EMIT_TOOL = {
       lean_rationale: { type: 'string' },
       forces: {
         type: 'array',
-        minItems: 10,
-        maxItems: 10,
+        minItems: 12,
+        maxItems: 12,
         items: {
           type: 'object',
           properties: {
@@ -116,7 +116,7 @@ const EMIT_TOOL = {
   },
 }
 
-const STRUCTURE_SYSTEM = `Convert the research briefing into the World Pulse reading via the emit_world tool. The forces array MUST contain exactly ten objects, one for EACH of these keys and no others: us_power, us_china, chokepoints_energy, russia_europe, institutions, living_planet, identity_religion, ai, money_trade, space_orbit. If the briefing is thin on a force, still include it with your best estimate. Score each force's tension 0–10 with this rubric: 0–2 calm/improving; 3–4 elevated but stable; 5–6 high but managed (truces holding); 7–8 severe active crisis with spillover risk; 9–10 systemic. Ten forces, exact keys.
+const STRUCTURE_SYSTEM = `Convert the research briefing into the World Pulse reading via the emit_world tool. The forces array MUST contain exactly twelve objects, one for EACH of these keys and no others: us_power, us_china, chokepoints_energy, russia_europe, institutions, living_planet, identity_religion, ai, money_trade, space_orbit, israel_us, elites. If the briefing is thin on a force, still include it with your best estimate. Score each force's tension 0–10 with this rubric: 0–2 calm/improving; 3–4 elevated but stable; 5–6 high but managed (truces holding); 7–8 severe active crisis with spillover risk; 9–10 systemic. Twelve forces, exact keys.
 
 scenario_lean is your best-judgment probability (%) for four scenarios over the next year, and the four MUST be positive numbers summing to exactly 100 (never zero):
 - A — Armed bargaining: great powers keep bargaining; chokepoints reopen slowly.
@@ -124,6 +124,8 @@ scenario_lean is your best-judgment probability (%) for four scenarios over the 
 - C — Two camps: US–China bargaining breaks; the world splits into blocs.
 - D — Patchwork repair: middle powers build issue-by-issue coalitions; institutions partly recover.
 Set lean_rationale to one or two sentences justifying the split.
+
+signpost_updates: for any signpost listed in the briefing whose date has passed and whose outcome you actually know, add { title (matching exactly), status: "happened", outcome: one factual sentence on what occurred }. Only mark "happened" when you know the real result — never guess. Add up to 3 new_signposts for notable upcoming dated events.
 
 Keep it concise: summary ≤3 sentences; each force what_changed ≤2 sentences, at most 2 indicators and 2 sources; every URL http(s). Counterpoint: one real positive or "No clear counterpoint this week." Plain English, politically neutral.`
 
@@ -137,7 +139,7 @@ async function structure(findings: string, week_start: string): Promise<any> {
       system: STRUCTURE_SYSTEM,
       tools: [EMIT_TOOL],
       tool_choice: { type: 'tool', name: 'emit_world' },
-      messages: [{ role: 'user', content: `Week starting ${week_start}. Research briefing:\n\n${findings}\n\nEmit the World Pulse reading for all ten forces now.` }],
+      messages: [{ role: 'user', content: `Week starting ${week_start}. Research briefing:\n\n${findings}\n\nEmit the World Pulse reading for all twelve forces now.` }],
     }),
   })
   if (!res.ok) throw new Error(`structure ${res.status}: ${await res.text()}`)
@@ -184,13 +186,13 @@ export default async function handler(req: any, res: any) {
     for (const r of existing.readings) if (r.week_start === lastWeek) prevScore[r.force_key] = Number(r.tension)
 
     const findings = await research(
-      `This week starts ${week_start} (Monday, UTC). Last week's tension scores: ${JSON.stringify(prevScore)}. Do at most 6 targeted web searches covering the week's biggest developments across the ten forces, then write a brief plain-text finding per force: what changed in the last 7 days, an estimated tension 0–10, one counterpoint, and 1–2 key numbers with dates and source URLs. Also note any of these signposts that clearly happened ${JSON.stringify(existing.signposts.map((s: any) => s.title))}, and up to 3 new dated events worth watching. Keep it brief.`,
+      `This week starts ${week_start} (Monday, UTC). Last week's tension scores: ${JSON.stringify(prevScore)}. Do at most 6 targeted web searches covering the week's biggest developments across the twelve forces, then write a brief plain-text finding per force: what changed in the last 7 days, an estimated tension 0–10, one counterpoint, and 1–2 key numbers with dates and source URLs. For any of these upcoming signposts whose date has now passed, search for what actually happened and state the outcome in one factual sentence (or say still unresolved): ${JSON.stringify(existing.signposts.filter((s: any) => s.status !== 'happened').map((s: any) => s.title))}. Also flag up to 3 new dated events worth watching. Keep it brief.`,
     )
 
     const out = await structure(findings, week_start)
 
     // Validate
-    if (!Array.isArray(out.forces) || out.forces.length !== 10) throw new Error('expected 10 forces')
+    if (!Array.isArray(out.forces) || out.forces.length !== 12) throw new Error("expected 12 forces")
     const seen = new Set<string>()
     for (const f of out.forces) {
       if (!FORCE_KEYS.includes(f.force_key)) throw new Error(`bad force_key ${f.force_key}`)
@@ -198,7 +200,7 @@ export default async function handler(req: any, res: any) {
       if (typeof f.tension !== 'number' || f.tension < 0 || f.tension > 10) throw new Error(`bad tension ${f.force_key}`)
       for (const s of f.sources ?? []) if (!validHttp(s.url)) throw new Error('bad source url')
     }
-    if (seen.size !== 10) throw new Error('duplicate/missing force')
+    if (seen.size !== 12) throw new Error('duplicate/missing force')
     const lean = out.scenario_lean ?? {}
     const sum = ['A', 'B', 'C', 'D'].reduce((a, k) => a + (Number(lean[k]) || 0), 0)
     if (Math.abs(sum - 100) > 2) throw new Error(`lean sums to ${sum}`)
