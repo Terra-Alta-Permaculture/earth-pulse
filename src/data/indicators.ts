@@ -1,9 +1,8 @@
 import type { IndicatorMeta } from '../lib/types'
 
 /**
- * The canonical set of indicators tracked by EarthPulse. The same keys are used
- * by the browser (to render) and the edge function (to fetch + store). Keep this
- * list mirrored in `supabase/functions/daily-fetch/indicators.ts`.
+ * The canonical set of indicators tracked by EarthPulse, used by the browser
+ * to render the dashboard.
  */
 export const INDICATORS: IndicatorMeta[] = [
   // ── Crisis stream ────────────────────────────────────────────────
