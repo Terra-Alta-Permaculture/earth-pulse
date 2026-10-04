@@ -147,6 +147,7 @@ export const REGEN_HUBS: (MapMarker & { kind: RegenKind; url?: string })[] = [
   { lat: 42.36, lon: -83.1, title: 'Detroit urban farms', note: 'Community food growing, USA', kind: 'network' },
   { lat: 53.71, lon: -2.1, title: 'Incredible Edible', note: 'Community food movement, Todmorden UK', kind: 'network', url: 'https://www.incredibleedible.org.uk' },
   { lat: 4.56, lon: -71.3, title: 'Gaviotas', note: 'Reforested savanna village, Colombia', kind: 'network' },
+  { lat: -17.83, lon: 31.05, title: 'La Via Campesina', note: 'Global peasant movement — 200M+ families for food sovereignty & agroecology', kind: 'network', url: 'https://viacampesina.org/en/' },
 
   // ── More Rights of Nature wins ──
   { lat: 23.7, lon: 90.4, title: 'Bangladesh rivers', note: 'All rivers given legal rights (2019)', kind: 'rights' },
