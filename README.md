@@ -170,3 +170,7 @@ curl -X POST "https://<project-ref>.supabase.co/functions/v1/earthpulse-world-we
 ## Not in this MVP (phase 2)
 
 User accounts · bioregional filtering · community data submission.
+
+---
+
+_Live at **https://earthpulse.terralta.org** · auto-deployed from `main` via Vercel._
