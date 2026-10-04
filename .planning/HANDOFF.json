@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "timestamp": "2026-10-03T21:27:50.117Z",
+  "timestamp": "2026-10-04T13:11:27.376Z",
   "source": "auto-postool",
   "partial": false,
   "phase": null,
@@ -22,25 +22,13 @@
     },
     {
       "status": "M",
-      "path": "api/world-refresh.ts"
+      "path": "src/components/DualMap.tsx"
     },
     {
       "status": "M",
-      "path": "src/components/world/SignpostTimeline.tsx"
-    },
-    {
-      "status": "M",
-      "path": "src/data/forces.ts"
-    },
-    {
-      "status": "M",
-      "path": "src/data/worldSeed.ts"
-    },
-    {
-      "status": "M",
-      "path": "src/lib/types.ts"
+      "path": "src/data/maps.ts"
     }
   ],
   "next_action": null,
-  "context_notes": "Recent commits:\n965032e EarthPulse: all-live planetary intelligence dashboard"
+  "context_notes": "Recent commits:\nc788b38 docs: note live URL & auto-deploy (test push)\nfd61bd9 World Pulse: add 2 forces + signpost \"what happened\" updates\n965032e EarthPulse: all-live planetary intelligence dashboard"
 }

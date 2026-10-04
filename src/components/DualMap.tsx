@@ -1,7 +1,15 @@
 import { useMemo } from 'react'
 import { LAND_RINGS } from '../data/worldOutline'
-import { useWorldEvents } from '../hooks/useWorldEvents'
-import { FORCE_MARKERS, REGEN_HUBS, REGEN_LEGEND, REGEN_COLOR, REGEN_DIRECTORIES } from '../data/maps'
+import {
+  FORCE_MARKERS,
+  DEGRADATION_SITES,
+  DEGRADE_COLOR,
+  DEGRADE_LEGEND,
+  REGEN_HUBS,
+  REGEN_LEGEND,
+  REGEN_COLOR,
+  REGEN_DIRECTORIES,
+} from '../data/maps'
 import { InfoDot } from './InfoDot'
 
 const W = 360
@@ -70,27 +78,25 @@ function MiniMap({ points, landFill = '#1b2c22', landStroke = '#2c4234' }: { poi
 }
 
 export function DualMap() {
-  const { points: events, quakeCount, hazardCount } = useWorldEvents()
-
   const belowPoints: Pt[] = useMemo(() => {
-    const ev: Pt[] = events.map((e) => ({
-      lon: e.lon,
-      lat: e.lat,
-      r: e.kind === 'quake' ? Math.max(0.5, Math.min(2.4, 0.4 + ((e.mag ?? 2.5) - 2.5) * 0.4)) : 1,
-      color: e.kind === 'wildfires' ? '#ef6a3a' : e.kind === 'quake' ? '#e0a852' : '#6aa9e0',
-      title: e.label,
+    const sites: Pt[] = DEGRADATION_SITES.map((s) => ({
+      lon: s.lon,
+      lat: s.lat,
+      r: 2.0,
+      color: DEGRADE_COLOR[s.kind],
+      title: `${s.title} — ${s.note}`,
     }))
     const forces: Pt[] = FORCE_MARKERS.map((m) => ({
       lon: m.lon,
       lat: m.lat,
-      r: 2.4,
-      color: '#d9604a',
+      r: 2.3,
+      color: '#e85c43',
       title: `${m.title} — ${m.note}`,
       ring: true,
-      href: '#world', // the 9 forces live on the World tab
+      href: '#world', // the forces live on the World tab
     }))
-    return [...ev, ...forces]
-  }, [events])
+    return [...sites, ...forces]
+  }, [])
 
   const abovePoints: Pt[] = useMemo(
     () =>
@@ -127,16 +133,15 @@ export function DualMap() {
             <span className="h-2 w-2 rounded-full bg-ember-400" />
             <span className="eyebrow text-ember-200">Below the line</span>
             <span className="ml-auto text-[0.7rem] text-sand-500">
-              <span className="stat-num text-ember-200">{quakeCount}</span> quakes ·{' '}
-              <span className="stat-num text-sand-200">{hazardCount}</span> hazards
+              extraction, degradation &amp; the <span className="stat-num text-ember-200">{FORCE_MARKERS.length}</span> forces
             </span>
           </div>
           <MiniMap points={belowPoints} />
           <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[0.65rem] text-sand-400">
-            <Legend color="#e0a852" label="Earthquakes" />
-            <Legend color="#ef6a3a" label="Wildfires" />
-            <Legend color="#6aa9e0" label="Storms" />
-            <Legend color="#d9604a" label="Geopolitical forces" />
+            {DEGRADE_LEGEND.map((l) => (
+              <Legend key={l.kind} color={DEGRADE_COLOR[l.kind]} label={l.label} />
+            ))}
+            <Legend color="#e85c43" label="Geopolitical forces" />
           </div>
         </div>
 
@@ -170,9 +175,10 @@ export function DualMap() {
       </div>
 
       <p className="mt-4 text-[0.6rem] text-sand-700">
-        Below: live USGS &amp; NASA events + the 9 forces as representative hotspots · Above: a curated
-        layer of real places (ecovillages, Doughnut cities, regen networks, Rights-of-Nature wins).
-        Click a green point to visit it; a red force opens the World tab. For what's near you, see Your Pulse.
+        Both maps are curated layers of real places — below: extraction &amp; degradation hotspots plus the{' '}
+        {FORCE_MARKERS.length} World Pulse forces; above: ecovillages, Doughnut cities, regen networks and
+        Rights-of-Nature wins. Click a green point to visit it; a red force opens the World tab. Live
+        earthquakes &amp; hazards are on the Live planet map above; what's near you is in Your Pulse.
       </p>
     </section>
   )
