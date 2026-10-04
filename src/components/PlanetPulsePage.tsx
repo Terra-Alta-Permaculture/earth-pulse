@@ -16,6 +16,7 @@ import { DoughnutMovement } from './DoughnutMovement'
 import { DualMap } from './DualMap'
 import { LawTracker } from './LawTracker'
 import { SeedSovereignty } from './SeedSovereignty'
+import { SoilNotOil } from './SoilNotOil'
 import { ScenarioPanel } from './ScenarioPanel'
 import { AdvicePanel } from './AdvicePanel'
 
@@ -112,6 +113,10 @@ export function PlanetPulsePage({ live }: { live: LiveState }) {
 
           <ErrorBoundary area="Seed sovereignty">
             <SeedSovereignty />
+          </ErrorBoundary>
+
+          <ErrorBoundary area="Soil not oil">
+            <SoilNotOil />
           </ErrorBoundary>
 
           <ErrorBoundary area="Scenarios panel">

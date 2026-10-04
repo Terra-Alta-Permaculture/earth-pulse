@@ -166,6 +166,22 @@ export function NovaPage() {
         </div>
       </Section>
 
+      <Section title="Ecofeminism — Shiva & Maria Mies">
+        <p>
+          Shiva and Maria Mies named a deeper root: the domination of nature and the domination of
+          women spring from the <em>same</em> worldview — a reductionist, patriarchal mindset that
+          treats both the living world and the work of care as passive “resources” to extract.
+        </p>
+        <p>
+          Ecofeminism reclaims the <em>feminine principle</em> (Prakriti) — nature as living and
+          generative, not inert matter — and honours the women who, worldwide, keep the seeds, grow the
+          food and carry the water. This is NOVA’s own spine: Bridge One’s <em>Sophia / the reader</em>,
+          and the Inversion’s <strong className="text-sand-200">economics → maternity</strong> (is life
+          flourishing?). It also sits behind the Doughnut’s gender-equality dimension — a social floor
+          no one should fall below.
+        </p>
+      </Section>
+
       <Section title="Go deeper — the living networks">
         <p>The alternatives aren’t waiting to be invented. They exist, scattered across time and geography, running quietly alongside the dominant system. Find them:</p>
         <div className="mt-1 flex flex-wrap gap-2">

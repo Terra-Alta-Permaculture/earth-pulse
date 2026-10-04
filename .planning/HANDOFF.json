@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "timestamp": "2026-10-04T13:42:10.987Z",
+  "timestamp": "2026-10-04T13:52:57.062Z",
   "source": "auto-postool",
   "partial": false,
   "phase": null,
@@ -34,13 +34,13 @@
     },
     {
       "status": "??",
-      "path": "src/components/SeedSovereignty.tsx"
+      "path": "src/components/SoilNotOil.tsx"
     },
     {
       "status": "??",
-      "path": "src/data/seedSovereignty.ts"
+      "path": "src/data/soilNotOil.ts"
     }
   ],
   "next_action": null,
-  "context_notes": "Recent commits:\nd949109 Add honest caveats to the debatable regeneration info-dots\n20ccefb Add honest caveat to EV sales info-dot\n2158354 Maps: below-the-line = curated degradation/extraction (not natural events); expand above-the-line\nc788b38 docs: note live URL & auto-deploy (test push)\nfd61bd9 World Pulse: add 2 forces + signpost \"what happened\" updates"
+  "context_notes": "Recent commits:\n8b87ed7 Add Seed Sovereignty section + Earth Democracy (Vandana Shiva)\nd949109 Add honest caveats to the debatable regeneration info-dots\n20ccefb Add honest caveat to EV sales info-dot\n2158354 Maps: below-the-line = curated degradation/extraction (not natural events); expand above-the-line\nc788b38 docs: note live URL & auto-deploy (test push)"
 }
