@@ -21,6 +21,9 @@ interface Dimension {
   /** For dimensions with no live feed: a fixed shortfall + context. */
   staticShortfall?: number
   staticContext?: string
+  /** World Bank serves some indicators without CORS headers — skip the live
+   *  fetch for those and use the recent fallback value instead. */
+  noFetch?: boolean
   source: string
 }
 
@@ -64,7 +67,7 @@ const DIMENSIONS: Dimension[] = [
   },
   {
     key: 'income', name: 'Income & work', desc: 'A livelihood above extreme poverty.',
-    code: 'SI.POV.DDAY', fallbackValue: 10.4,
+    code: 'SI.POV.DDAY', fallbackValue: 10.4, noFetch: true, // WB serves this without CORS
     shortfall: (v) => v, context: (v) => `${v}% in extreme poverty ($3/day)`,
     source: 'World Bank',
   },
@@ -88,7 +91,7 @@ const DIMENSIONS: Dimension[] = [
   },
   {
     key: 'peace', name: 'Peace & justice', desc: 'Freedom from violence.',
-    code: 'VC.IHR.PSRC.P5', fallbackValue: 5.2,
+    code: 'VC.IHR.PSRC.P5', fallbackValue: 5.2, noFetch: true, // WB serves this without CORS
     shortfall: (v) => Math.min(100, v * 4), context: (v) => `${v} homicides per 100,000`,
     source: 'World Bank / UNODC',
   },
@@ -153,8 +156,9 @@ async function loadFoundation(): Promise<ResolvedDimension[]> {
           context: d.staticContext ?? '', source: d.source, live: false,
         }
       }
-      // Live dimension (fall back to the latest known value on failure)
-      const v = d.code ? await fetchWB(d.code) : null
+      // Live dimension (fall back to the latest known value on failure).
+      // Skip the fetch entirely for indicators WB serves without CORS headers.
+      const v = d.code && !d.noFetch ? await fetchWB(d.code) : null
       const value = v ?? d.fallbackValue ?? 0
       const shortfall = Math.max(0, Math.min(100, d.shortfall(value)))
       return {
