@@ -13,6 +13,7 @@ import { LiveStreamPanel } from './LiveStreamPanel'
 import { BalanceMeter } from './BalanceMeter'
 import { Doughnut } from './Doughnut'
 import { DoughnutMovement } from './DoughnutMovement'
+import { PlanetHistory } from './PlanetHistory'
 import { DualMap } from './DualMap'
 import { LawTracker } from './LawTracker'
 import { SeedSovereignty } from './SeedSovereignty'
@@ -98,6 +99,10 @@ export function PlanetPulsePage({ live }: { live: LiveState }) {
               farming — nor trajectories. Treat it as a rough signal, not a verdict.
             </p>
           </div>
+
+          <ErrorBoundary area="Planet history">
+            <PlanetHistory signals={signals} balance={balance} />
+          </ErrorBoundary>
 
           <ErrorBoundary area="Doughnut">
             <Doughnut signals={signals} />

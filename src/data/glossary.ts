@@ -60,5 +60,6 @@ export const GLOSSARY: Record<string, string> = {
   the_line: 'Not left or right, but up or down: does a system regenerate or extract? The test is five questions — does it (1) regenerate what it uses, (2) grow diversity & resilience, (3) work with natural cycles, (4) need other life to flourish, and (5) let decision-makers feel the consequences? Mostly yes = above the line.',
   below_line: 'Below the line = extraction: systems that take more than they return, hide the consequences, and push past the planet’s limits. These are the degradation signals.',
   above_line: 'Above the line = regeneration: systems that give back more than they take and share the benefits widely. These are the signs of repair.',
+  planet_history: 'A quiet daily record of EarthPulse’s headline readings — ecological balance, the safe & just score, CO₂ and sea level — so the direction of travel becomes visible over weeks and months. One point is saved per day the site is visited; it’s just these few planetary numbers, not you.',
   doughnut_movement: 'The Doughnut isn’t just an idea — cities and regions are using it to set real policy, coordinated by the Doughnut Economics Action Lab (DEAL), founded in 2019 by Kate Raworth and team.',
 }
