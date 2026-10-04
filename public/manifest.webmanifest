@@ -1,0 +1,32 @@
+{
+  "name": "EarthPulse · Planetary Intelligence",
+  "short_name": "EarthPulse",
+  "description": "A living, all-free dashboard of the planet — degradation and regeneration, tracked side by side.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d0f0d",
+  "theme_color": "#0d0f0d",
+  "categories": ["education", "news", "utilities"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
