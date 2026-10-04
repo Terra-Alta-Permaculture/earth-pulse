@@ -37,7 +37,7 @@ export const GLOSSARY: Record<string, string> = {
   inaturalist: 'Nature observations people are logging right now through the iNaturalist app — citizen science in action.',
   clean_air_cities: 'Cities currently measuring clean, healthy air (PM2.5 below the WHO guideline).',
   ozone_recovery: 'The ozone layer is healing: ~99% of the chemicals that damaged it have been phased out, and it’s on track to fully recover. Proof global action works.',
-  ev_adoption: 'The share of new cars sold worldwide that are electric — a fast-rising sign of the shift away from petrol.',
+  ev_adoption: 'The share of new cars sold worldwide that are electric — a fast-rising sign of the shift away from petrol. A direction, not a clean win: EVs still depend on mining (lithium, cobalt) and are only as low-carbon as the grid that charges them.',
   forest_restoration: 'How much land the world has pledged to restore to forest, toward a global 2030 goal.',
   renewable_electricity: 'The share of the world’s electricity generated from renewables like sun, wind and water.',
   renewable_energy: 'Renewables as a share of all the energy the world uses (not just electricity — also heating, transport, industry).',

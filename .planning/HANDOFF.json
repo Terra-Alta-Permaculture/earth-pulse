@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "timestamp": "2026-10-04T13:11:27.376Z",
+  "timestamp": "2026-10-04T13:20:10.886Z",
   "source": "auto-postool",
   "partial": false,
   "phase": null,
@@ -18,17 +18,9 @@
   "uncommitted_files": [
     {
       "status": "M",
-      "path": ".planning/HANDOFF.json"
-    },
-    {
-      "status": "M",
-      "path": "src/components/DualMap.tsx"
-    },
-    {
-      "status": "M",
-      "path": "src/data/maps.ts"
+      "path": "src/data/glossary.ts"
     }
   ],
   "next_action": null,
-  "context_notes": "Recent commits:\nc788b38 docs: note live URL & auto-deploy (test push)\nfd61bd9 World Pulse: add 2 forces + signpost \"what happened\" updates\n965032e EarthPulse: all-live planetary intelligence dashboard"
+  "context_notes": "Recent commits:\n2158354 Maps: below-the-line = curated degradation/extraction (not natural events); expand above-the-line\nc788b38 docs: note live URL & auto-deploy (test push)\nfd61bd9 World Pulse: add 2 forces + signpost \"what happened\" updates\n965032e EarthPulse: all-live planetary intelligence dashboard"
 }
