@@ -143,6 +143,29 @@ export function NovaPage() {
         </div>
       </Section>
 
+      <Section title="Earth Democracy — Vandana Shiva">
+        <p>
+          Much of this echoes <strong className="text-sand-200">Vandana Shiva</strong>, whose idea of{' '}
+          <em>Earth Democracy</em> holds that all beings — not just humans — have a right to life, that
+          economies should serve living systems rather than consume them, and that the Earth is a
+          community of subjects, not a collection of resources.
+        </p>
+        <p>It already lives across this app:</p>
+        <div className="overflow-hidden rounded-xl border border-soil-700/60">
+          {[
+            ['Seed is a commons', 'bija swaraj — seed sovereignty → the Seed sovereignty section'],
+            ['Rights of all beings', 'living rights for rivers & forests → the law tracker'],
+            ['Living economy', 'relocalised, cooperative, regenerative → Your Pulse & the above-the-line map'],
+            ['Diversity over monoculture', '“monocultures of the mind” → the biodiversity signals'],
+          ].map(([a, b], i) => (
+            <div key={a} className={`grid grid-cols-1 gap-0.5 p-3 sm:grid-cols-[13rem_1fr] sm:gap-3 ${i > 0 ? 'border-t border-soil-800' : ''}`}>
+              <span className="font-medium text-sand-100">{a}</span>
+              <span className="text-[0.85rem] text-sand-400">{b}</span>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       <Section title="Go deeper — the living networks">
         <p>The alternatives aren’t waiting to be invented. They exist, scattered across time and geography, running quietly alongside the dominant system. Find them:</p>
         <div className="mt-1 flex flex-wrap gap-2">

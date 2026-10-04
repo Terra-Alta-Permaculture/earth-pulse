@@ -53,6 +53,7 @@ export const GLOSSARY: Record<string, string> = {
   doughnut: 'Kate Raworth’s model: a safe & just space between a social floor (nobody left short) and an ecological ceiling (not overshooting the planet).',
   world_map: 'A live map of earthquakes and natural hazards happening on Earth right now.',
   law_tracker: 'How law is starting to protect nature — giving rivers rights, and making large-scale ecosystem destruction (ecocide) a crime.',
+  seed_sovereignty: 'Who controls seed — the first link in the food chain. Below the line: corporate patents and uniformity enclosing it. Above: farmers and communities saving, sharing and renewing seed as a living commons (Vandana Shiva’s bija swaraj).',
 
   // ── Vertical Politics (NOVA) ──
   the_line: 'Not left or right, but up or down: does a system regenerate or extract? The test is five questions — does it (1) regenerate what it uses, (2) grow diversity & resilience, (3) work with natural cycles, (4) need other life to flourish, and (5) let decision-makers feel the consequences? Mostly yes = above the line.',

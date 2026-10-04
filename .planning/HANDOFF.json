@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "timestamp": "2026-10-04T13:32:50.408Z",
+  "timestamp": "2026-10-04T13:42:10.987Z",
   "source": "auto-postool",
   "partial": false,
   "phase": null,
@@ -15,7 +15,32 @@
   "blockers": [],
   "human_actions_pending": [],
   "decisions": [],
-  "uncommitted_files": [],
+  "uncommitted_files": [
+    {
+      "status": "M",
+      "path": ".planning/HANDOFF.json"
+    },
+    {
+      "status": "M",
+      "path": "src/components/NovaPage.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/components/PlanetPulsePage.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/data/glossary.ts"
+    },
+    {
+      "status": "??",
+      "path": "src/components/SeedSovereignty.tsx"
+    },
+    {
+      "status": "??",
+      "path": "src/data/seedSovereignty.ts"
+    }
+  ],
   "next_action": null,
-  "context_notes": "Recent commits:\n20ccefb Add honest caveat to EV sales info-dot\n2158354 Maps: below-the-line = curated degradation/extraction (not natural events); expand above-the-line\nc788b38 docs: note live URL & auto-deploy (test push)\nfd61bd9 World Pulse: add 2 forces + signpost \"what happened\" updates\n965032e EarthPulse: all-live planetary intelligence dashboard"
+  "context_notes": "Recent commits:\nd949109 Add honest caveats to the debatable regeneration info-dots\n20ccefb Add honest caveat to EV sales info-dot\n2158354 Maps: below-the-line = curated degradation/extraction (not natural events); expand above-the-line\nc788b38 docs: note live URL & auto-deploy (test push)\nfd61bd9 World Pulse: add 2 forces + signpost \"what happened\" updates"
 }
