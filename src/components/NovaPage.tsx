@@ -199,6 +199,29 @@ export function NovaPage() {
         </div>
       </Section>
 
+      <Section title="Why I built this">
+        <div className="rounded-xl border-l-2 border-moss-700/60 bg-soil-900/40 py-1 pl-4 pr-2">
+          <p>
+            A few years ago I heard <strong className="text-sand-200">Helena Norberg-Hodge</strong>{' '}
+            say something at a seminar that stayed with me: to be a big-picture activist, you first
+            have to understand how the world actually is — and how it works. EarthPulse is my attempt
+            to do exactly that.
+          </p>
+          <p className="mt-3">
+            I wanted my thinking and my action to be anchored in well-informed data — a clear, honest
+            read of the planet — rather than in the constant, overwhelming churn of social media and
+            global news, which so often leaves us misinformed and anxious. When I can see the real
+            state of things, side by side, my feeling of the world grows from understanding instead of
+            from the feed.
+          </p>
+          <p className="mt-3">
+            My hope is simple: that from here, I — and anyone who visits — might think a little more
+            freely.
+          </p>
+          <p className="mt-3 text-sand-400">— Pedro</p>
+        </div>
+      </Section>
+
       <div className="mt-10 rounded-2xl border border-soil-700/60 bg-soil-900/50 p-6 text-center">
         <p className="font-display text-lg text-sand-100">The point is to begin.</p>
         <p className="mx-auto mt-2 max-w-md text-sm text-sand-400">
