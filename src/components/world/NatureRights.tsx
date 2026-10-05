@@ -1,6 +1,7 @@
 import { NATURE_STATS, NATURE_PERSONHOOD, NATURE_SOURCES } from '../../data/natureRights'
 import type { WorldHuman } from '../../hooks/useWorldPulse'
 import { InfoDot } from '../InfoDot'
+import { ActOnThis } from '../ActOnThis'
 
 const SEED = NATURE_STATS
 
@@ -83,6 +84,9 @@ export function NatureRights({ live }: { live?: WorldHuman['nature'] }) {
             {s.label} ↗
           </a>
         ))}
+      </div>
+      <div className="mt-4">
+        <ActOnThis q="nature" label="nature events" />
       </div>
     </section>
   )

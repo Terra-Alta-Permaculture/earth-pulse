@@ -1,5 +1,6 @@
 import { SOIL_STATS, SOIL_FRAMING, SOIL_LINKS, type SoilLine } from '../data/soilNotOil'
 import { InfoDot } from './InfoDot'
+import { ActOnThis } from './ActOnThis'
 
 const LINE = {
   below: { label: 'Oil-based farming', color: '#9b6b3f' },
@@ -74,6 +75,9 @@ export function SoilNotOil() {
       <p className="mt-1.5 text-[0.6rem] text-sand-700">
         Curated, cited (not a live feed) · after Vandana Shiva’s “Soil Not Oil”
       </p>
+      <div className="mt-4">
+        <ActOnThis q="permaculture" label="permaculture events" />
+      </div>
     </section>
   )
 }

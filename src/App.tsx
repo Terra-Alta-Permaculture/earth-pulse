@@ -5,11 +5,13 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { PlanetPulsePage } from './components/PlanetPulsePage'
 import { WorldPulsePage } from './components/world/WorldPulsePage'
 import { NovaPage } from './components/NovaPage'
+import { ActPage } from './components/ActPage'
 
 function currentTab(): Tab {
   if (typeof window === 'undefined') return 'planet'
   if (window.location.hash === '#world') return 'world'
   if (window.location.hash === '#nova') return 'nova'
+  if (window.location.hash === '#act') return 'act'
   return 'planet'
 }
 
@@ -43,6 +45,8 @@ export default function App() {
           <WorldPulsePage />
         ) : tab === 'nova' ? (
           <NovaPage />
+        ) : tab === 'act' ? (
+          <ActPage />
         ) : (
           <PlanetPulsePage live={live} />
         )}
@@ -51,6 +55,8 @@ export default function App() {
       <footer className="mt-14 border-t border-soil-800 pt-6 text-center text-xs text-sand-700">
         {tab === 'world'
           ? 'EarthPulse · World Pulse · weekly readings of the human systems pressing on the planet'
+          : tab === 'act'
+          ? 'EarthPulse · act with Emerge — regenerative events, quests & people near you'
           : tab === 'nova'
           ? 'EarthPulse · built on the thinking in NOVA by Pedro Valdjiu · Terra Alta, Sintra'
           : 'EarthPulse · live data from NOAA, USGS, NASA, Open-Meteo, GBIF & iNaturalist · scenarios & advice by Claude'}

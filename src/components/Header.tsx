@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 
-export type Tab = 'planet' | 'world' | 'nova'
+export type Tab = 'planet' | 'world' | 'act' | 'nova'
 
 interface Props {
   tab: Tab
@@ -13,12 +13,14 @@ interface Props {
 const TABS: { key: Tab; label: string }[] = [
   { key: 'planet', label: 'Planet' },
   { key: 'world', label: 'World' },
+  { key: 'act', label: 'Act' },
   { key: 'nova', label: 'NOVA' },
 ]
 
 const SUBTITLE: Record<Tab, string> = {
   planet: 'Dual-stream planetary intelligence',
   world: 'Pressures on the planet',
+  act: 'From knowing to doing',
   nova: 'The thinking behind this',
 }
 

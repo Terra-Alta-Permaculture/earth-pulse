@@ -1,4 +1,5 @@
 import { InfoDot } from './InfoDot'
+import { ActOnThis } from './ActOnThis'
 
 // Curated, cited: cities & regions putting the Doughnut into practice, via the
 // Doughnut Economics Action Lab (DEAL). Not a live feed.
@@ -62,6 +63,9 @@ export function DoughnutMovement() {
         Curated (not a live feed) · source: Doughnut Economics Action Lab. These cities also appear on
         the above-the-line map.
       </p>
+      <div className="mt-4">
+        <ActOnThis q="community" label="community events" />
+      </div>
     </section>
   )
 }

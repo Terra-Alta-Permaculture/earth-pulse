@@ -16,6 +16,9 @@ export interface NearestQuake {
 
 export interface LocalPulse {
   place: string
+  /** Rounded to ~1 km. */
+  lat: number
+  lon: number
   temp: number | null
   tempMax: number | null
   tempMin: number | null
@@ -228,6 +231,8 @@ export function useLocalPulse() {
           : { anomaly: null, label: null }
         setData({
           place,
+          lat,
+          lon,
           temp: wx?.temp ?? null,
           tempMax: wx?.tempMax ?? null,
           tempMin: wx?.tempMin ?? null,

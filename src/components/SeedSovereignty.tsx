@@ -1,5 +1,6 @@
 import { SEED_STATS, SEED_FRAMING, SEED_LINKS, type SeedLine } from '../data/seedSovereignty'
 import { InfoDot } from './InfoDot'
+import { ActOnThis } from './ActOnThis'
 
 const LINE = {
   below: { label: 'Enclosure', color: '#d9604a' },
@@ -74,6 +75,9 @@ export function SeedSovereignty() {
       <p className="mt-1.5 text-[0.6rem] text-sand-700">
         Curated, cited (not a live feed) · in honour of Vandana Shiva
       </p>
+      <div className="mt-4">
+        <ActOnThis q="seed" label="seed swaps & saving" />
+      </div>
     </section>
   )
 }

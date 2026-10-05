@@ -1,5 +1,6 @@
 import { useLocalPulse, type LocalPulse } from '../hooks/useLocalPulse'
 import { InfoDot } from './InfoDot'
+import { emergeEvents } from '../lib/emerge'
 
 function uvWord(uv: number): string {
   if (uv < 3) return 'low'
@@ -205,6 +206,14 @@ export function YourPulse() {
         <>
           <Cards d={data} />
           <Localize d={data} loading={localLoading} />
+          <a
+            href={emergeEvents({ lat: data.lat, lng: data.lon, place: data.place.split(',')[0] })}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-moss-700/60 bg-moss-900/30 px-3 py-1 text-[0.72rem] font-medium text-moss-200 transition-colors hover:border-moss-500 hover:bg-moss-900/60"
+          >
+            ✋ Regenerative events near {data.place.split(',')[0]} on Emerge →
+          </a>
           <p className="mt-3 text-[0.6rem] text-sand-700">
             Open-Meteo · USGS · BigDataCloud · OpenStreetMap · coordinates rounded to ~1 km and used only for these lookups
           </p>

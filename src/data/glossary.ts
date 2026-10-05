@@ -116,4 +116,7 @@ export const GLOSSARY: Record<string, string> = {
   signposts: 'Upcoming dates and events worth watching — they could push the world one way or another.',
   // Your pulse
   your_pulse: 'Live conditions where you are — weather, air, heat, quakes nearby — plus local ways to get involved. Your location is only used to look these up, and only if you allow it. Nothing is saved.',
+  // Act
+  act: 'Ways to turn what you see here into action. Every link opens Emerge, a free Terra Alta app for regenerative events, courses and people near you.',
+  act_actions: 'Each card opens Emerge already searching for that kind of event. If nothing shows near you, widen the distance in Emerge.',
 }
