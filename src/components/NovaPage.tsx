@@ -67,7 +67,7 @@ export function NovaPage() {
         <p className="eyebrow text-moss-300">The thinking behind EarthPulse</p>
         <h1 className="mt-2 font-display text-4xl text-sand-100">NOVA</h1>
         <p className="mt-2 text-sand-300">Toward a culture that regenerates from stability, not from crisis.</p>
-        <p className="mt-3 text-sm text-sand-500">A book by Pedro Valdoleiros · Terra Alta Permaculture, Sintra</p>
+        <p className="mt-3 text-sm text-sand-500">A book by Pedro Valdjiu · Terra Alta Permaculture, Sintra</p>
       </div>
 
       <Section title="In one breath">
