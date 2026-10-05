@@ -5,6 +5,8 @@ import { useWorldPulse } from '../../hooks/useWorldPulse'
 import { ForceCard } from './ForceCard'
 import { ScenarioLean } from './ScenarioLean'
 import { SignpostTimeline } from './SignpostTimeline'
+import { ActiveConflicts } from './ActiveConflicts'
+import { GenderEquality } from './GenderEquality'
 
 const reportUrl = import.meta.env.VITE_WORLD_REPORT_URL as string | undefined
 
@@ -98,7 +100,7 @@ export function WorldPulsePage() {
 
       {/* Force grid */}
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="font-display text-xl text-sand-100">The nine forces</h2>
+        <h2 className="font-display text-xl text-sand-100">The {FORCES.length} forces</h2>
         <button
           onClick={() => setSortByTension((v) => !v)}
           className="rounded-lg border border-soil-600 bg-soil-800 px-3 py-1.5 text-xs font-medium text-sand-300 transition-colors hover:bg-soil-700"
@@ -111,6 +113,10 @@ export function WorldPulsePage() {
           <ForceCard key={r.force_key} reading={r} history={historyByForce[r.force_key] ?? [r]} />
         ))}
       </div>
+
+      {/* Active wars + the equality gap — the human state of the world */}
+      <ActiveConflicts />
+      <GenderEquality />
 
       {/* Scenario lean */}
       {weekly && <ScenarioLean lean={weekly.scenario_lean} rationale={weekly.lean_rationale} />}
