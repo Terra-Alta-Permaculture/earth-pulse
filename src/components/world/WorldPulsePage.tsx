@@ -7,6 +7,8 @@ import { ScenarioLean } from './ScenarioLean'
 import { SignpostTimeline } from './SignpostTimeline'
 import { ActiveConflicts } from './ActiveConflicts'
 import { GenderEquality } from './GenderEquality'
+import { HumanRights } from './HumanRights'
+import { ChildrensRights } from './ChildrensRights'
 
 const reportUrl = import.meta.env.VITE_WORLD_REPORT_URL as string | undefined
 
@@ -114,9 +116,11 @@ export function WorldPulsePage() {
         ))}
       </div>
 
-      {/* Active wars + the equality gap — the human state of the world */}
+      {/* The human state of the world — wars, equality, rights */}
       <ActiveConflicts />
       <GenderEquality />
+      <HumanRights />
+      <ChildrensRights />
 
       {/* Scenario lean */}
       {weekly && <ScenarioLean lean={weekly.scenario_lean} rationale={weekly.lean_rationale} />}

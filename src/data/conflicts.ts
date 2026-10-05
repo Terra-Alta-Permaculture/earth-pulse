@@ -23,7 +23,7 @@ export const CONFLICT_STATS = {
   allConflicts: 120, // ICRC: "more than 120 armed conflicts" today
   allConflictsNote: 'armed conflicts worldwide today (incl. non-state groups)',
   displacement: 122, // UNHCR: 122.1M forcibly displaced (mid-2024), millions
-  displacementNote: 'million people forcibly displaced by war & persecution',
+  displacementNote: 'people forcibly displaced by war & persecution',
   asOf: '2024–25',
 }
 
