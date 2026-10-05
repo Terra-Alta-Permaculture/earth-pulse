@@ -2,7 +2,7 @@
 // Dependency-free. The app is all-live, so data APIs always go to the network;
 // we only cache the app shell + static build assets so it opens instantly / offline.
 
-const CACHE = 'earthpulse-shell-v1'
+const CACHE = 'earthpulse-shell-v2'
 const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/favicon.svg']
 
 self.addEventListener('install', (event) => {
@@ -45,6 +45,10 @@ self.addEventListener('fetch', (event) => {
   // Cross-origin (the live public-data APIs): straight to network, never cached —
   // the dashboard must always show real current data.
   if (url.origin !== self.location.origin) return
+
+  // Same-origin dynamic data (our serverless API): always network, never cache,
+  // so World Pulse / law / history always reflect the latest blob.
+  if (url.pathname.startsWith('/api/')) return
 
   // Same-origin static assets (hashed JS/CSS/icons): cache-first, fill at runtime.
   event.respondWith(
