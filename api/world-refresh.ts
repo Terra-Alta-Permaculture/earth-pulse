@@ -111,6 +111,33 @@ const EMIT_TOOL = {
         type: 'array',
         items: { type: 'object', properties: { event_date: {}, date_label: { type: 'string' }, title: { type: 'string' }, force_keys: { type: 'array', items: { type: 'string' } }, what_it_means: { type: 'string' } }, required: ['date_label', 'title'] },
       },
+      human_indicators: {
+        type: 'object',
+        description: 'Latest published global figures for the human-cost panels (wars, freedom, children). These update only a few times a year — use the most recent report values, never invented numbers.',
+        properties: {
+          conflicts: {
+            type: 'object',
+            properties: {
+              all: { type: 'number' }, state_based: { type: 'number' },
+              displaced_m: { type: 'number' }, as_of: { type: 'string' },
+            },
+          },
+          human_rights: {
+            type: 'object',
+            properties: {
+              decline_years: { type: 'number' }, not_free_pct: { type: 'number' },
+              autocracy_pct: { type: 'number' }, open_civic_pct: { type: 'number' }, as_of: { type: 'string' },
+            },
+          },
+          children: {
+            type: 'object',
+            properties: {
+              child_labour_m: { type: 'number' }, out_of_school_m: { type: 'number' },
+              in_conflict_m: { type: 'number' }, as_of: { type: 'string' },
+            },
+          },
+        },
+      },
     },
     required: ['summary', 'scenario_lean', 'lean_rationale', 'forces'],
   },
@@ -126,6 +153,8 @@ scenario_lean is your best-judgment probability (%) for four scenarios over the 
 Set lean_rationale to one or two sentences justifying the split.
 
 signpost_updates: for any signpost listed in the briefing whose date has passed and whose outcome you actually know, add { title (matching exactly), status: "happened", outcome: one factual sentence on what occurred }. Only mark "happened" when you know the real result — never guess. Add up to 3 new_signposts for notable upcoming dated events.
+
+human_indicators: emit the most recent published global figures for the three human-cost panels. These are ANNUAL report numbers, not weekly — restate the latest known values and only change one if a newer report has come out. Never invent a number; omit any field you cannot ground in a real recent source. Fields: conflicts { all: total armed conflicts incl. non-state (e.g. ICRC ~120+), state_based: UCDP state-based conflict count, displaced_m: UNHCR forcibly displaced in millions, as_of: "2024" etc }; human_rights { decline_years: Freedom House consecutive years of declining global freedom, not_free_pct: % of people in "Not Free" countries, autocracy_pct: % living under autocratic rule (V-Dem), open_civic_pct: % in fully open civic space (CIVICUS), as_of }; children { child_labour_m, out_of_school_m, in_conflict_m (UNICEF/ILO/UNESCO, in millions), as_of }.
 
 Keep it concise: summary ≤3 sentences; each force what_changed ≤2 sentences, at most 2 indicators and 2 sources; every URL http(s). Counterpoint: one real positive or "No clear counterpoint this week." Plain English, politically neutral.`
 
@@ -149,20 +178,39 @@ async function structure(findings: string, week_start: string): Promise<any> {
   return block.input
 }
 
-async function loadExisting(): Promise<{ weekly: any; readings: any[]; signposts: any[] }> {
+async function loadExisting(): Promise<{ weekly: any; readings: any[]; signposts: any[]; human: any }> {
   try {
     const g: any = await get(BLOB_PATH, { access: 'private' })
-    if (!g) return { weekly: null, readings: [], signposts: [] }
+    if (!g) return { weekly: null, readings: [], signposts: [], human: null }
     const text = g.stream
       ? await new Response(g.stream).text()
       : typeof g.blob?.text === 'function'
         ? await g.blob.text()
         : Buffer.from(g.blob).toString('utf-8')
     const d = JSON.parse(text)
-    return { weekly: d.weekly ?? null, readings: d.readings ?? [], signposts: d.signposts ?? [] }
+    return { weekly: d.weekly ?? null, readings: d.readings ?? [], signposts: d.signposts ?? [], human: d.human_indicators ?? null }
   } catch {
-    return { weekly: null, readings: [], signposts: [] }
+    return { weekly: null, readings: [], signposts: [], human: null }
   }
+}
+
+// Merge freshly-emitted human indicators over the previous ones, field by field,
+// so a week that reports only some figures never wipes the others.
+function mergeHuman(prev: any, next: any): any {
+  const pick = (a: any, b: any) => {
+    const out: any = { ...(a || {}) }
+    for (const [k, v] of Object.entries(b || {})) {
+      if (typeof v === 'number' ? isFinite(v) : v != null && v !== '') out[k] = v
+    }
+    return Object.keys(out).length ? out : undefined
+  }
+  if (!prev && !next) return undefined
+  const merged = {
+    conflicts: pick(prev?.conflicts, next?.conflicts),
+    human_rights: pick(prev?.human_rights, next?.human_rights),
+    children: pick(prev?.children, next?.children),
+  }
+  return Object.values(merged).some(Boolean) ? merged : undefined
 }
 
 export default async function handler(req: any, res: any) {
@@ -186,7 +234,7 @@ export default async function handler(req: any, res: any) {
     for (const r of existing.readings) if (r.week_start === lastWeek) prevScore[r.force_key] = Number(r.tension)
 
     const findings = await research(
-      `This week starts ${week_start} (Monday, UTC). Last week's tension scores: ${JSON.stringify(prevScore)}. Do at most 6 targeted web searches covering the week's biggest developments across the twelve forces, then write a brief plain-text finding per force: what changed in the last 7 days, an estimated tension 0–10, one counterpoint, and 1–2 key numbers with dates and source URLs. For any of these upcoming signposts whose date has now passed, search for what actually happened and state the outcome in one factual sentence (or say still unresolved): ${JSON.stringify(existing.signposts.filter((s: any) => s.status !== 'happened').map((s: any) => s.title))}. Also flag up to 3 new dated events worth watching. Keep it brief.`,
+      `This week starts ${week_start} (Monday, UTC). Last week's tension scores: ${JSON.stringify(prevScore)}. Do at most 6 targeted web searches covering the week's biggest developments across the twelve forces, then write a brief plain-text finding per force: what changed in the last 7 days, an estimated tension 0–10, one counterpoint, and 1–2 key numbers with dates and source URLs. For any of these upcoming signposts whose date has now passed, search for what actually happened and state the outcome in one factual sentence (or say still unresolved): ${JSON.stringify(existing.signposts.filter((s: any) => s.status !== 'happened').map((s: any) => s.title))}. Also flag up to 3 new dated events worth watching. Finally, in one short block, state the latest KNOWN headline figures (these are annual, not weekly — don't spend extra searches unless a brand-new report just dropped): active armed conflicts (UCDP state-based count, ICRC total, UNHCR displaced in millions); human rights (Freedom House years-of-decline & % in "Not Free" countries, V-Dem % under autocracy, CIVICUS % in open civic space); children (UNICEF/ILO child labour, UNESCO out-of-school, UNICEF children in conflict, in millions). Keep it brief.`,
     )
 
     const out = await structure(findings, week_start)
@@ -236,10 +284,13 @@ export default async function handler(req: any, res: any) {
       }
     }
 
+    const human = mergeHuman(existing.human, out.human_indicators)
+
     const payload = {
       weekly: { week_start, summary: String(out.summary ?? ''), scenario_lean: lean, lean_rationale: String(out.lean_rationale ?? '') },
       readings,
       signposts,
+      ...(human ? { human_indicators: human } : {}),
     }
 
     await put(BLOB_PATH, JSON.stringify(payload), { access: 'private', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: true })

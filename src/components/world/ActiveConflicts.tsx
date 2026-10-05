@@ -1,9 +1,21 @@
 import { ACTIVE_CONFLICTS, CONFLICT_STATS, CONFLICT_SOURCES } from '../../data/conflicts'
+import type { WorldHuman } from '../../hooks/useWorldPulse'
 import { InfoDot } from '../InfoDot'
 
-const S = CONFLICT_STATS
+const SEED = CONFLICT_STATS
 
-export function ActiveConflicts() {
+export function ActiveConflicts({ live }: { live?: WorldHuman['conflicts'] }) {
+  const S = {
+    allConflicts: live?.all ?? SEED.allConflicts,
+    allConflictsNote: SEED.allConflictsNote,
+    stateBasedConflicts: live?.state_based ?? SEED.stateBasedConflicts,
+    stateBasedNote: SEED.stateBasedNote,
+    displacement: live?.displaced_m ?? SEED.displacement,
+    displacementNote: SEED.displacementNote,
+    asOf: live?.as_of ?? SEED.asOf,
+  }
+  const isLive = Boolean(live && (live.all || live.state_based || live.displaced_m))
+
   return (
     <section className="card mb-6 p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -11,7 +23,9 @@ export function ActiveConflicts() {
           <h2 className="font-display text-xl text-sand-100">⚔ Wars &amp; armed conflicts</h2>
           <InfoDot topic="active_conflicts" label="Active conflicts" />
         </div>
-        <span className="text-xs text-sand-500">as of {S.asOf}</span>
+        <span className="text-xs text-sand-500">
+          {isLive ? 'updated weekly · ' : ''}as of {S.asOf}
+        </span>
       </div>
       <p className="mt-1 text-sm text-sand-400">
         How much of the world is at war right now — the human cost behind the

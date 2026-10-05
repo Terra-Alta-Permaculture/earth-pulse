@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { CHILD_STATS, CHILD_SOURCES } from '../../data/childrensRights'
+import type { WorldHuman } from '../../hooks/useWorldPulse'
 import { InfoDot } from '../InfoDot'
 
-const S = CHILD_STATS
+const SEED = CHILD_STATS
 
 // One live World Bank metric: under-5 mortality (deaths per 1,000 live births).
 const FALLBACK = { v: 37.4, year: '2024' }
@@ -22,7 +23,7 @@ async function fetchMortality(): Promise<{ v: number; year: string; live: boolea
   return { ...FALLBACK, live: false }
 }
 
-export function ChildrensRights() {
+export function ChildrensRights({ live }: { live?: WorldHuman['children'] }) {
   const [mort, setMort] = useState<{ v: number; year: string; live: boolean }>({
     ...FALLBACK,
     live: false,
@@ -37,6 +38,20 @@ export function ChildrensRights() {
     }
   }, [])
 
+  const S = {
+    childLabour: live?.child_labour_m ?? SEED.childLabour,
+    childLabourNote: SEED.childLabourNote,
+    outOfSchool: live?.out_of_school_m ?? SEED.outOfSchool,
+    outOfSchoolNote: SEED.outOfSchoolNote,
+    inConflict: live?.in_conflict_m ?? SEED.inConflict,
+    inConflictNote: SEED.inConflictNote,
+    childMarriageNote: SEED.childMarriageNote,
+    asOf: live?.as_of ?? SEED.asOf,
+  }
+  const isLive = Boolean(
+    (live && (live.child_labour_m || live.out_of_school_m || live.in_conflict_m)) || mort.live,
+  )
+
   return (
     <section className="card mb-6 p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -44,7 +59,9 @@ export function ChildrensRights() {
           <h2 className="font-display text-xl text-sand-100">🧒 Children’s rights</h2>
           <InfoDot topic="childrens_rights" label="Children's rights" />
         </div>
-        <span className="text-xs text-sand-500">as of {S.asOf}</span>
+        <span className="text-xs text-sand-500">
+          {isLive ? 'updated weekly · ' : ''}as of {S.asOf}
+        </span>
       </div>
       <p className="mt-1 text-sm text-sand-400">
         The Convention on the Rights of the Child is the most ratified treaty on

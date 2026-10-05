@@ -19,7 +19,7 @@ export interface Conflict {
 //  • all armed conflicts incl. non-state & one-sided — the ICRC's wider count
 export const CONFLICT_STATS = {
   stateBasedConflicts: 61, // UCDP: 61 state-based conflicts in 2024
-  stateBasedNote: 'state-based armed conflicts in 2024 — the most since 1946',
+  stateBasedNote: 'state-based armed conflicts — the most since 1946',
   allConflicts: 120, // ICRC: "more than 120 armed conflicts" today
   allConflictsNote: 'armed conflicts worldwide today (incl. non-state groups)',
   displacement: 122, // UNHCR: 122.1M forcibly displaced (mid-2024), millions

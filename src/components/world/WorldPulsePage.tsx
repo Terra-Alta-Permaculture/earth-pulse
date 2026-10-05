@@ -13,7 +13,7 @@ import { ChildrensRights } from './ChildrensRights'
 const reportUrl = import.meta.env.VITE_WORLD_REPORT_URL as string | undefined
 
 export function WorldPulsePage() {
-  const { weekly, latestByForce, historyByForce, signposts, loading, isSample } = useWorldPulse()
+  const { weekly, latestByForce, historyByForce, signposts, human, loading, isSample } = useWorldPulse()
   const [sortByTension, setSortByTension] = useState(false)
 
   const readings = FORCES.map((f) => latestByForce[f.key]).filter(
@@ -117,10 +117,10 @@ export function WorldPulsePage() {
       </div>
 
       {/* The human state of the world — wars, equality, rights */}
-      <ActiveConflicts />
+      <ActiveConflicts live={human?.conflicts} />
       <GenderEquality />
-      <HumanRights />
-      <ChildrensRights />
+      <HumanRights live={human?.human_rights} />
+      <ChildrensRights live={human?.children} />
 
       {/* Scenario lean */}
       {weekly && <ScenarioLean lean={weekly.scenario_lean} rationale={weekly.lean_rationale} />}

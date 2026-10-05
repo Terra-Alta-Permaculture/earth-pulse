@@ -7,11 +7,22 @@ import {
   worldSignpostsSeed,
 } from '../data/worldSeed'
 
+export interface WorldHuman {
+  conflicts?: { all?: number; state_based?: number; displaced_m?: number; as_of?: string }
+  human_rights?: {
+    decline_years?: number; not_free_pct?: number; autocracy_pct?: number
+    open_civic_pct?: number; as_of?: string
+  }
+  children?: { child_labour_m?: number; out_of_school_m?: number; in_conflict_m?: number; as_of?: string }
+}
+
 export interface WorldPulseState {
   weekly: WorldWeekly | null
   latestByForce: Record<ForceKey, WorldReading | undefined>
   historyByForce: Record<ForceKey, WorldReading[]>
   signposts: WorldSignpost[]
+  /** Live human-cost figures from the weekly writer, or null to use seed. */
+  human: WorldHuman | null
   loading: boolean
   isSample: boolean
 }
@@ -46,6 +57,7 @@ function seedState(): WorldPulseState {
     latestByForce: latest,
     historyByForce: history,
     signposts: worldSignpostsSeed,
+    human: null,
     loading: false,
     isSample: true,
   }
@@ -92,6 +104,7 @@ export function useWorldPulse(): WorldPulseState {
           latestByForce: latest,
           historyByForce: history,
           signposts,
+          human: (data.human_indicators ?? null) as WorldHuman | null,
           loading: false,
           isSample: false,
         })

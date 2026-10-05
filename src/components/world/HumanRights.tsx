@@ -1,9 +1,25 @@
 import { HR_STATS, HR_CONCERNS, HR_SOURCES } from '../../data/humanRights'
+import type { WorldHuman } from '../../hooks/useWorldPulse'
 import { InfoDot } from '../InfoDot'
 
-const S = HR_STATS
+const SEED = HR_STATS
 
-export function HumanRights() {
+export function HumanRights({ live }: { live?: WorldHuman['human_rights'] }) {
+  const S = {
+    declineYears: live?.decline_years ?? SEED.declineYears,
+    declineNote: SEED.declineNote,
+    notFreePct: live?.not_free_pct ?? SEED.notFreePct,
+    notFreeNote: SEED.notFreeNote,
+    autocracyPct: live?.autocracy_pct ?? SEED.autocracyPct,
+    autocracyNote: SEED.autocracyNote,
+    openCivicPct: live?.open_civic_pct ?? SEED.openCivicPct,
+    openCivicNote: SEED.openCivicNote,
+    asOf: live?.as_of ?? SEED.asOf,
+  }
+  const isLive = Boolean(
+    live && (live.decline_years || live.not_free_pct || live.autocracy_pct || live.open_civic_pct),
+  )
+
   return (
     <section className="card mb-6 p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -11,7 +27,9 @@ export function HumanRights() {
           <h2 className="font-display text-xl text-sand-100">✊ Human rights &amp; freedom</h2>
           <InfoDot topic="human_rights" label="Human rights" />
         </div>
-        <span className="text-xs text-sand-500">as of {S.asOf}</span>
+        <span className="text-xs text-sand-500">
+          {isLive ? 'updated weekly · ' : ''}as of {S.asOf}
+        </span>
       </div>
       <p className="mt-1 text-sm text-sand-400">
         Whether people can speak, gather, vote and live free from repression —
