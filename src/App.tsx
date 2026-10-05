@@ -52,7 +52,7 @@ export default function App() {
         {tab === 'world'
           ? 'EarthPulse · World Pulse · weekly readings of the human systems pressing on the planet'
           : tab === 'nova'
-          ? 'EarthPulse · built on the thinking in NOVA by Pedro Valdoleiros · Terra Alta, Sintra'
+          ? 'EarthPulse · built on the thinking in NOVA by Pedro Valdjiu · Terra Alta, Sintra'
           : 'EarthPulse · live data from NOAA, USGS, NASA, Open-Meteo, GBIF & iNaturalist · scenarios & advice by Claude'}
       </footer>
     </div>
