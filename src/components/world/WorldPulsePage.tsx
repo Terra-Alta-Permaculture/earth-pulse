@@ -9,6 +9,8 @@ import { ActiveConflicts } from './ActiveConflicts'
 import { GenderEquality } from './GenderEquality'
 import { HumanRights } from './HumanRights'
 import { ChildrensRights } from './ChildrensRights'
+import { NatureRights } from './NatureRights'
+import { AnimalRights } from './AnimalRights'
 
 const reportUrl = import.meta.env.VITE_WORLD_REPORT_URL as string | undefined
 
@@ -116,11 +118,13 @@ export function WorldPulsePage() {
         ))}
       </div>
 
-      {/* The human state of the world — wars, equality, rights */}
+      {/* The widening circle of rights — wars, equality, people, nature, animals */}
       <ActiveConflicts live={human?.conflicts} />
       <GenderEquality />
       <HumanRights live={human?.human_rights} />
       <ChildrensRights live={human?.children} />
+      <NatureRights live={human?.nature} />
+      <AnimalRights live={human?.animals} />
 
       {/* Scenario lean */}
       {weekly && <ScenarioLean lean={weekly.scenario_lean} rationale={weekly.lean_rationale} />}

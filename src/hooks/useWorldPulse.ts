@@ -14,6 +14,11 @@ export interface WorldHuman {
     open_civic_pct?: number; as_of?: string
   }
   children?: { child_labour_m?: number; out_of_school_m?: number; in_conflict_m?: number; as_of?: string }
+  nature?: { initiatives?: number; countries?: number; as_of?: string }
+  animals?: {
+    land_animals_bn?: number; wildlife_decline_pct?: number
+    sentience_jurisdictions?: number; as_of?: string
+  }
 }
 
 export interface WorldPulseState {

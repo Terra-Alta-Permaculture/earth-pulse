@@ -136,6 +136,19 @@ const EMIT_TOOL = {
               in_conflict_m: { type: 'number' }, as_of: { type: 'string' },
             },
           },
+          nature: {
+            type: 'object',
+            properties: {
+              initiatives: { type: 'number' }, countries: { type: 'number' }, as_of: { type: 'string' },
+            },
+          },
+          animals: {
+            type: 'object',
+            properties: {
+              land_animals_bn: { type: 'number' }, wildlife_decline_pct: { type: 'number' },
+              sentience_jurisdictions: { type: 'number' }, as_of: { type: 'string' },
+            },
+          },
         },
       },
     },
@@ -154,7 +167,7 @@ Set lean_rationale to one or two sentences justifying the split.
 
 signpost_updates: for any signpost listed in the briefing whose date has passed and whose outcome you actually know, add { title (matching exactly), status: "happened", outcome: one factual sentence on what occurred }. Only mark "happened" when you know the real result — never guess. Add up to 3 new_signposts for notable upcoming dated events.
 
-human_indicators: ALWAYS include this object and fill EVERY field. These are well-established ANNUAL statistics (UCDP, ICRC, UNHCR, Freedom House, V-Dem, CIVICUS, UNICEF, ILO, UNESCO) — give the most recent published figure you know for each; prefer a newer number if the briefing has one, otherwise use your best knowledge. These change only a few times a year, so it is fine (and expected) to restate the same values week to week. Do NOT omit the object or any field. Fields: conflicts { all: total armed conflicts incl. non-state (ICRC, ~120+), state_based: UCDP state-based conflict count (~61), displaced_m: UNHCR forcibly displaced in millions (~122), as_of: e.g. "2024" }; human_rights { decline_years: Freedom House consecutive years of declining global freedom (~19), not_free_pct: % of people in "Not Free" countries (~38), autocracy_pct: % living under autocratic rule, V-Dem (~72), open_civic_pct: % in fully open civic space, CIVICUS (~2), as_of }; children { child_labour_m (~138), out_of_school_m (~250), in_conflict_m (~473), as_of } — all in millions.
+human_indicators: ALWAYS include this object and fill EVERY field. These are well-established ANNUAL statistics (UCDP, ICRC, UNHCR, Freedom House, V-Dem, CIVICUS, UNICEF, ILO, UNESCO) — give the most recent published figure you know for each; prefer a newer number if the briefing has one, otherwise use your best knowledge. These change only a few times a year, so it is fine (and expected) to restate the same values week to week. Do NOT omit the object or any field. Fields: conflicts { all: total armed conflicts incl. non-state (ICRC, ~120+), state_based: UCDP state-based conflict count (~61), displaced_m: UNHCR forcibly displaced in millions (~122), as_of: e.g. "2024" }; human_rights { decline_years: Freedom House consecutive years of declining global freedom (~19), not_free_pct: % of people in "Not Free" countries (~38), autocracy_pct: % living under autocratic rule, V-Dem (~72), open_civic_pct: % in fully open civic space, CIVICUS (~2), as_of }; children { child_labour_m (~138), out_of_school_m (~250), in_conflict_m (~473), as_of } — all in millions; nature { initiatives: Rights-of-Nature laws & initiatives worldwide (Eco Jurisprudence Monitor, ~400), countries: countries with Rights-of-Nature provisions (~39), as_of }; animals { land_animals_bn: land animals farmed for food per year in billions (FAO, ~80), wildlife_decline_pct: average decline in monitored wildlife since 1970 (WWF Living Planet Index, ~73), sentience_jurisdictions: jurisdictions recognising animal sentience in law (~32), as_of }.
 
 Keep it concise: summary ≤3 sentences; each force what_changed ≤2 sentences, at most 2 indicators and 2 sources; every URL http(s). Counterpoint: one real positive or "No clear counterpoint this week." Plain English, politically neutral.`
 
@@ -209,6 +222,8 @@ function mergeHuman(prev: any, next: any): any {
     conflicts: pick(prev?.conflicts, next?.conflicts),
     human_rights: pick(prev?.human_rights, next?.human_rights),
     children: pick(prev?.children, next?.children),
+    nature: pick(prev?.nature, next?.nature),
+    animals: pick(prev?.animals, next?.animals),
   }
   return Object.values(merged).some(Boolean) ? merged : undefined
 }
@@ -234,7 +249,7 @@ export default async function handler(req: any, res: any) {
     for (const r of existing.readings) if (r.week_start === lastWeek) prevScore[r.force_key] = Number(r.tension)
 
     const findings = await research(
-      `This week starts ${week_start} (Monday, UTC). Last week's tension scores: ${JSON.stringify(prevScore)}. Do at most 6 targeted web searches covering the week's biggest developments across the twelve forces, then write a brief plain-text finding per force: what changed in the last 7 days, an estimated tension 0–10, one counterpoint, and 1–2 key numbers with dates and source URLs. For any of these upcoming signposts whose date has now passed, search for what actually happened and state the outcome in one factual sentence (or say still unresolved): ${JSON.stringify(existing.signposts.filter((s: any) => s.status !== 'happened').map((s: any) => s.title))}. Also flag up to 3 new dated events worth watching. Finally, in one short block, state the latest KNOWN headline figures (these are annual, not weekly — don't spend extra searches unless a brand-new report just dropped): active armed conflicts (UCDP state-based count, ICRC total, UNHCR displaced in millions); human rights (Freedom House years-of-decline & % in "Not Free" countries, V-Dem % under autocracy, CIVICUS % in open civic space); children (UNICEF/ILO child labour, UNESCO out-of-school, UNICEF children in conflict, in millions). Keep it brief.`,
+      `This week starts ${week_start} (Monday, UTC). Last week's tension scores: ${JSON.stringify(prevScore)}. Do at most 6 targeted web searches covering the week's biggest developments across the twelve forces, then write a brief plain-text finding per force: what changed in the last 7 days, an estimated tension 0–10, one counterpoint, and 1–2 key numbers with dates and source URLs. For any of these upcoming signposts whose date has now passed, search for what actually happened and state the outcome in one factual sentence (or say still unresolved): ${JSON.stringify(existing.signposts.filter((s: any) => s.status !== 'happened').map((s: any) => s.title))}. Also flag up to 3 new dated events worth watching. Finally, in one short block, state the latest KNOWN headline figures (these are annual, not weekly — don't spend extra searches unless a brand-new report just dropped): active armed conflicts (UCDP state-based count, ICRC total, UNHCR displaced in millions); human rights (Freedom House years-of-decline & % in "Not Free" countries, V-Dem % under autocracy, CIVICUS % in open civic space); children (UNICEF/ILO child labour, UNESCO out-of-school, UNICEF children in conflict, in millions); Rights of Nature (initiatives worldwide & countries with provisions); animals (land animals farmed/yr in billions, WWF wildlife decline % since 1970, jurisdictions recognising sentience). Keep it brief.`,
     )
 
     const out = await structure(findings, week_start)
