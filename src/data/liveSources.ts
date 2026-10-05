@@ -472,17 +472,19 @@ export async function fetchThreatenedSpecies(): Promise<LiveSignal> {
 }
 
 // ── Crisis: Data-centre electricity — derived (live base × IEA share) ─
-// World Bank has no direct data-centre series, so derive it: live world
-// electricity (per-capita use × population) × IEA's ~1.5% data-centre share.
+// World Bank has no direct data-centre series, so derive it: world electricity
+// (per-capita use × live population) × IEA's ~1.5% data-centre share.
+// NOTE: the per-capita indicator (EG.USE.ELEC.KH.PC) is served by the World
+// Bank WITHOUT CORS headers, so it can't be fetched from the browser — we inline
+// its latest value (2023) as a constant and keep population live.
+const WORLD_KWH_PER_CAPITA = 3559 // World Bank EG.USE.ELEC.KH.PC, 2023 (no CORS)
+const WORLD_KWH_PER_CAPITA_YEAR = '2023'
+
 export async function fetchDataCenters(): Promise<LiveSignal> {
-  const [perCapD, popD] = await Promise.all([
-    getJson('https://api.worldbank.org/v2/country/WLD/indicator/EG.USE.ELEC.KH.PC?format=json&mrnev=1'),
-    getJson('https://api.worldbank.org/v2/country/WLD/indicator/SP.POP.TOTL?format=json&mrnev=1'),
-  ])
-  const pc = perCapD?.[1]?.[0]
+  const popD = await getJson('https://api.worldbank.org/v2/country/WLD/indicator/SP.POP.TOTL?format=json&mrnev=1')
   const pop = popD?.[1]?.[0]
-  if (!pc?.value || !pop?.value) throw new Error('WB electricity/pop empty')
-  const totalTWh = (Number(pc.value) * Number(pop.value)) / 1e9 // kWh → TWh
+  if (!pop?.value) throw new Error('WB pop empty')
+  const totalTWh = (WORLD_KWH_PER_CAPITA * Number(pop.value)) / 1e9 // kWh → TWh
   const dcTWh = totalTWh * 0.015 // IEA: data centres ≈ 1.5% of world electricity
   return {
     key: 'data_centers',
@@ -494,7 +496,7 @@ export async function fetchDataCenters(): Promise<LiveSignal> {
     source: 'World Bank × IEA',
     sourceUrl: 'https://www.iea.org/energy-system/buildings/data-centres-and-data-transmission-networks',
     updatedAt: nowIso(),
-    asOf: `~${pc.date}`,
+    asOf: `~${WORLD_KWH_PER_CAPITA_YEAR}`,
   }
 }
 
