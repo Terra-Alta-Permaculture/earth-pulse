@@ -68,4 +68,52 @@ export const GLOSSARY: Record<string, string> = {
   gender_equality: 'How equally power, work and opportunity are shared between women and men. The headline is the World Economic Forum’s Global Gender Gap (~68% closed, ~134 years to parity at today’s pace); the live bars below are World Bank data — women in parliament, women vs men in the paid workforce, and girls’ vs boys’ school enrolment (≈1.00 = equal).',
   planet_history: 'A quiet daily record of EarthPulse’s headline readings — ecological balance, the safe & just score, CO₂ and sea level — so the direction of travel becomes visible over weeks and months. One point is saved per day the site is visited; it’s just these few planetary numbers, not you.',
   doughnut_movement: 'The Doughnut isn’t just an idea — cities and regions are using it to set real policy, coordinated by the Doughnut Economics Action Lab (DEAL), founded in 2019 by Kate Raworth and team.',
+
+  // ── Short per-number explanations (newer panels) ──
+  // Wars
+  conflicts_all: 'Every armed fight going on today, including ones between rebel groups or gangs — not just between governments. The widest count (ICRC).',
+  conflicts_state: 'Wars where at least one side is a government. Researchers say there are more now than at any time since 1946.',
+  displaced: 'People forced to leave their homes by war, violence or persecution. Many still live inside their own country.',
+  largest_wars: 'The biggest wars right now, by deaths and people forced from home. A bright dot = full war; a dim dot = lower-level conflict.',
+  // Human rights
+  hr_decline: 'How many years in a row more countries lost freedom than gained it, according to Freedom House.',
+  hr_not_free: 'The share of the world’s people living in countries where basic rights like free speech and fair votes are mostly denied.',
+  hr_autocracy: 'The share of people living where leaders aren’t truly chosen or held in check by voters, courts and a free press.',
+  hr_open_civic: 'The share of people who can freely protest, organise and speak out without fear. Very few.',
+  hr_concerns: 'The problems human-rights groups are warning about most right now.',
+  // Children
+  child_labour: 'Children doing work that harms their health or keeps them out of school.',
+  out_of_school: 'Children and teenagers who should be in school but aren’t.',
+  child_conflict: 'Children growing up in places with active war — about 1 in 6 kids on Earth.',
+  child_mortality: 'Out of every 1,000 babies born, how many die before turning 5. Live from the World Bank. It has more than halved since 2000.',
+  // Gender
+  gender_gap: 'A score of how equal women and men are in pay, jobs, school, health and politics. 100% would mean fully equal.',
+  women_parliament: 'The share of seats in national parliaments held by women. Equal would be 50%.',
+  women_workforce: 'The share of women vs men who work or look for paid work. The gap shows how far apart they are.',
+  girls_school: 'Girls’ school enrolment compared to boys’. 1.00 means exactly equal.',
+  // Nature rights
+  ron_initiatives: 'Laws, court rulings and local rules that give nature its own rights.',
+  ron_countries: 'Countries where some law or ruling recognises nature’s rights.',
+  ron_personhood: 'Rivers, forests and lagoons that courts or laws now treat like a person — they can be defended in court.',
+  // Animals
+  animals_farmed: 'Land animals (chickens, pigs, cows…) killed for food every year. Fish not included.',
+  wildlife_decline: 'On average, monitored wild animal populations are about this much smaller than in 1970.',
+  sentience_law: 'Places whose laws say animals can feel pain and emotions — so their welfare must count.',
+  animals_progress: 'A quick look at what’s improving for animals, and what isn’t.',
+  // Planet over time
+  hist_balance: 'Our 0–100 score of the planet’s ecological health, saved once a day. Higher is better.',
+  hist_score: 'How well the world meets people’s needs without breaking nature’s limits, 0–100. Higher is better.',
+  hist_co2: 'Carbon dioxide in the air, in parts per million. Lower is better; it keeps rising.',
+  hist_sea: 'How much the sea has risen since 1880, in centimetres. Lower is better.',
+  // Doughnut
+  doughnut_score: 'One number, 0–100: how close the world is to meeting everyone’s basic needs while staying inside nature’s limits. Higher is better.',
+  // World tab
+  world_summary: 'This week’s short summary of the big forces shaping the world, written fresh every week.',
+  world_tension: 'The average tension of all the forces below, from 0 (calm) to 10 (crisis). The arrow shows where we are.',
+  world_forces: 'The big pressures shaping the world — like great-power rivalry, war, energy, AI and climate. Each gets a tension score from 0 (calm) to 10 (crisis).',
+  scenario_lean: 'Four possible futures, and how much this week’s news points to each. An educated guess, not a forecast.',
+  signpost_updates: 'Events we were watching that have now happened, and what came of them.',
+  signposts: 'Upcoming dates and events worth watching — they could push the world one way or another.',
+  // Your pulse
+  your_pulse: 'Live conditions where you are — weather, air, heat, quakes nearby — plus local ways to get involved. Your location is only used to look these up, and only if you allow it. Nothing is saved.',
 }

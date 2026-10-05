@@ -30,17 +30,24 @@ export function NatureRights({ live }: { live?: WorldHuman['nature'] }) {
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <div className="rounded-xl border border-moss-800/40 bg-moss-950/20 p-4">
-          <span className="stat-num block text-3xl text-moss-200">{S.initiatives}+</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-moss-200">{S.initiatives}+</span>
+            <InfoDot topic="ron_initiatives" label="Rights of Nature initiatives" />
+          </span>
           <span className="mt-1 block text-[0.8rem] leading-snug text-sand-400">{SEED.initiativesNote}</span>
         </div>
         <div className="rounded-xl border border-moss-800/40 bg-moss-950/20 p-4">
-          <span className="stat-num block text-3xl text-moss-200">{S.countries}</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-moss-200">{S.countries}</span>
+            <InfoDot topic="ron_countries" label="Countries" />
+          </span>
           <span className="mt-1 block text-[0.8rem] leading-snug text-sand-400">{SEED.countriesNote}</span>
         </div>
       </div>
 
-      <h3 className="mt-5 text-[0.8rem] uppercase tracking-wide text-sand-500">
+      <h3 className="mt-5 flex items-center gap-1.5 text-[0.8rem] uppercase tracking-wide text-sand-500">
         Ecosystems granted legal rights
+        <InfoDot topic="ron_personhood" label="Legal rights for ecosystems" />
       </h3>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {NATURE_PERSONHOOD.map((c) => (

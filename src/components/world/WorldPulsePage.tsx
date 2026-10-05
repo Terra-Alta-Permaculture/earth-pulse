@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { FORCES } from '../../data/forces'
 import { useWorldPulse } from '../../hooks/useWorldPulse'
 import { ForceCard } from './ForceCard'
+import { InfoDot } from '../InfoDot'
 import { ScenarioLean } from './ScenarioLean'
 import { SignpostTimeline } from './SignpostTimeline'
 import { ActiveConflicts } from './ActiveConflicts'
@@ -63,7 +64,10 @@ export function WorldPulsePage() {
             <span className="text-xs text-sand-500">{weekLabel}</span>
           </div>
         </div>
-        <h2 className="mt-2 font-display text-xl text-sand-100">The pressures on the planet</h2>
+        <h2 className="mt-2 flex items-center gap-2 font-display text-xl text-sand-100">
+          The pressures on the planet
+          <InfoDot topic="world_summary" label="This week" />
+        </h2>
         <p className="mt-2 text-sm leading-relaxed text-sand-300">{weekly?.summary}</p>
         {reportUrl && (
           <a
@@ -80,7 +84,10 @@ export function WorldPulsePage() {
       {/* World tension meter */}
       <div className="card mb-6 px-5 py-4">
         <div className="flex items-center justify-between">
-          <span className="eyebrow">World tension</span>
+          <span className="flex items-center gap-1.5">
+            <span className="eyebrow">World tension</span>
+            <InfoDot topic="world_tension" label="World tension" />
+          </span>
           <span className="text-xs text-sand-400">
             <span className="text-ember-300">{rising} rising</span>
             {' · '}
@@ -104,7 +111,10 @@ export function WorldPulsePage() {
 
       {/* Force grid */}
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="font-display text-xl text-sand-100">The {FORCES.length} forces</h2>
+        <h2 className="flex items-center gap-2 font-display text-xl text-sand-100">
+          The {FORCES.length} forces
+          <InfoDot topic="world_forces" label="The forces" />
+        </h2>
         <button
           onClick={() => setSortByTension((v) => !v)}
           className="rounded-lg border border-soil-600 bg-soil-800 px-3 py-1.5 text-xs font-medium text-sand-300 transition-colors hover:bg-soil-700"

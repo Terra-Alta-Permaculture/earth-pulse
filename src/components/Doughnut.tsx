@@ -103,7 +103,10 @@ export function Doughnut({ signals }: { signals: LiveSignal[] }) {
           <span className="text-base text-sand-600">/100</span>
         </span>
         <span className="text-xs text-sand-500">
-          safe &amp; just space score
+          <span className="inline-flex items-center gap-1 align-middle">
+            safe &amp; just space score
+            <InfoDot topic="doughnut_score" label="Safe & just space score" />
+          </span>
           {ready && (
             <>
               {' '}· <span className="text-sand-300">{fullyIn}</span> of {total} dimensions within,{' '}

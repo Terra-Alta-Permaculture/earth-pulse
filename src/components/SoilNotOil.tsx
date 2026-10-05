@@ -16,6 +16,10 @@ function Col({ line }: { line: SoilLine }) {
         <span className="eyebrow" style={{ color: m.color }}>
           {line === 'below' ? 'Below the line · ' : 'Above the line · '}{m.label}
         </span>
+        <InfoDot
+          topic={line === 'below' ? 'below_line' : 'above_line'}
+          label={line === 'below' ? 'Below the line' : 'Above the line'}
+        />
       </div>
       <div className="space-y-2">
         {stats.map((s) => (

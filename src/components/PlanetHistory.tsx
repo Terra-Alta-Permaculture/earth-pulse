@@ -25,13 +25,14 @@ interface Metric {
   /** Which direction counts as improvement, for the delta colour. */
   good: 'up' | 'down'
   digits: number
+  topic: string
 }
 
 const METRICS: Metric[] = [
-  { key: 'balance', label: 'Ecological balance', unit: '/100', color: '#79b568', good: 'up', digits: 0 },
-  { key: 'score', label: 'Safe & just space', unit: '/100', color: '#5fa8d3', good: 'up', digits: 0 },
-  { key: 'co2', label: 'CO₂', unit: 'ppm', color: '#e0a852', good: 'down', digits: 1 },
-  { key: 'sea', label: 'Sea level', unit: 'cm', color: '#c98b6b', good: 'down', digits: 1 },
+  { key: 'balance', label: 'Ecological balance', unit: '/100', color: '#79b568', good: 'up', digits: 0, topic: 'hist_balance' },
+  { key: 'score', label: 'Safe & just space', unit: '/100', color: '#5fa8d3', good: 'up', digits: 0, topic: 'hist_score' },
+  { key: 'co2', label: 'CO₂', unit: 'ppm', color: '#e0a852', good: 'down', digits: 1, topic: 'hist_co2' },
+  { key: 'sea', label: 'Sea level', unit: 'cm', color: '#c98b6b', good: 'down', digits: 1, topic: 'hist_sea' },
 ]
 
 export function PlanetHistory({ signals, balance }: { signals: LiveSignal[]; balance: number }) {
@@ -100,8 +101,9 @@ export function PlanetHistory({ signals, balance }: { signals: LiveSignal[]; bal
               className="rounded-xl border border-soil-800 bg-soil-900/50 p-4"
             >
               <div className="flex items-baseline justify-between gap-2">
-                <span className="text-[0.8rem] uppercase tracking-wide text-sand-500">
+                <span className="flex items-center gap-1.5 text-[0.8rem] uppercase tracking-wide text-sand-500">
                   {m.label}
+                  <InfoDot topic={m.topic} label={m.label} />
                 </span>
                 {delta != null && (
                   <span className="stat-num text-xs" style={{ color: deltaColor }}>

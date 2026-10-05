@@ -55,12 +55,15 @@ async function load(): Promise<GInd> {
   return data
 }
 
-function Bar({ value, label, sub }: { value: number; label: string; sub: string }) {
+function Bar({ value, label, sub, topic }: { value: number; label: string; sub: string; topic: string }) {
   const pct = Math.max(0, Math.min(100, value))
   return (
     <div className="rounded-xl border border-soil-800 bg-soil-900/40 p-4">
       <div className="flex items-baseline justify-between gap-2">
-        <span className="text-[0.8rem] uppercase tracking-wide text-sand-500">{label}</span>
+        <span className="flex items-center gap-1.5 text-[0.8rem] uppercase tracking-wide text-sand-500">
+          {label}
+          <InfoDot topic={topic} label={label} />
+        </span>
         <span className="stat-num text-sm text-sand-200">{sub}</span>
       </div>
       <div className="mt-2 h-2 overflow-hidden rounded-full bg-soil-800">
@@ -108,7 +111,10 @@ export function GenderEquality() {
       {/* WEF headline (cited) */}
       <div className="mt-4 rounded-xl border border-moss-800/40 bg-moss-950/20 p-4">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <span className="stat-num text-3xl text-moss-200">~68%</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-moss-200">~68%</span>
+            <InfoDot topic="gender_gap" label="Global Gender Gap" />
+          </span>
           <span className="text-[0.7rem] text-sand-500">WEF Global Gender Gap 2024</span>
         </div>
         <p className="mt-1 text-[0.82rem] leading-snug text-sand-300">
@@ -121,16 +127,19 @@ export function GenderEquality() {
       <div className="mt-3 grid gap-3 sm:grid-cols-3">
         <Bar
           label="In parliament"
+          topic="women_parliament"
           sub={`${d.parl?.toFixed(0)}%`}
           value={d.parl ?? 0}
         />
         <Bar
           label="In the workforce"
+          topic="women_workforce"
           sub={`${d.laborF?.toFixed(0)}% vs ${d.laborM?.toFixed(0)}%`}
           value={d.laborF ?? 0}
         />
         <Bar
           label="Girls in school"
+          topic="girls_school"
           sub={d.edu != null ? `${d.edu.toFixed(2)} parity` : '—'}
           value={d.edu != null ? d.edu * 100 : 0}
         />

@@ -33,21 +33,31 @@ export function AnimalRights({ live }: { live?: WorldHuman['animals'] }) {
 
       <div className="mt-4 grid gap-3 sm:grid-cols-3">
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.landAnimalsBn}bn</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.landAnimalsBn}bn</span>
+            <InfoDot topic="animals_farmed" label="Animals farmed" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{SEED.landAnimalsNote}</span>
         </div>
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">−{S.wildlifeDeclinePct}%</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">−{S.wildlifeDeclinePct}%</span>
+            <InfoDot topic="wildlife_decline" label="Wildlife decline" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{SEED.wildlifeDeclineNote}</span>
         </div>
         <div className="rounded-xl border border-moss-800/40 bg-moss-950/20 p-4">
-          <span className="stat-num block text-3xl text-moss-200">{S.sentienceJurisdictions}</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-moss-200">{S.sentienceJurisdictions}</span>
+            <InfoDot topic="sentience_law" label="Sentience in law" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{SEED.sentienceNote}</span>
         </div>
       </div>
 
-      <h3 className="mt-5 text-[0.8rem] uppercase tracking-wide text-sand-500">
+      <h3 className="mt-5 flex items-center gap-1.5 text-[0.8rem] uppercase tracking-wide text-sand-500">
         Where it stands
+        <InfoDot topic="animals_progress" label="Where it stands" />
       </h3>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {ANIMAL_PROGRESS.map((p) => (

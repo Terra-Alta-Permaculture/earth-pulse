@@ -1,4 +1,5 @@
 import { useLocalPulse, type LocalPulse } from '../hooks/useLocalPulse'
+import { InfoDot } from './InfoDot'
 
 function uvWord(uv: number): string {
   if (uv < 3) return 'low'
@@ -161,6 +162,7 @@ export function YourPulse() {
         <div>
           <h2 className="flex items-center gap-2 text-lg font-semibold text-sand-100">
             <span className="text-moss-400">◎</span> Your pulse
+            <InfoDot topic="your_pulse" label="Your pulse" />
             {status === 'ready' && data && (
               <span className="text-sm font-normal text-sand-400">· {data.place}</span>
             )}

@@ -35,19 +35,28 @@ export function ActiveConflicts({ live }: { live?: WorldHuman['conflicts'] }) {
       {/* Headline numbers */}
       <div className="mt-4 grid gap-3 sm:grid-cols-3">
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.allConflicts}+</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.allConflicts}+</span>
+            <InfoDot topic="conflicts_all" label="All armed conflicts" />
+          </span>
           <span className="mt-1 block text-[0.8rem] leading-snug text-sand-400">
             {S.allConflictsNote}
           </span>
         </div>
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.stateBasedConflicts}</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.stateBasedConflicts}</span>
+            <InfoDot topic="conflicts_state" label="State-based conflicts" />
+          </span>
           <span className="mt-1 block text-[0.8rem] leading-snug text-sand-400">
             {S.stateBasedNote}
           </span>
         </div>
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.displacement}M</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.displacement}M</span>
+            <InfoDot topic="displaced" label="Forcibly displaced" />
+          </span>
           <span className="mt-1 block text-[0.8rem] leading-snug text-sand-400">
             {S.displacementNote}
           </span>
@@ -55,8 +64,9 @@ export function ActiveConflicts({ live }: { live?: WorldHuman['conflicts'] }) {
       </div>
 
       {/* Major active wars */}
-      <h3 className="mt-5 text-[0.8rem] uppercase tracking-wide text-sand-500">
+      <h3 className="mt-5 flex items-center gap-1.5 text-[0.8rem] uppercase tracking-wide text-sand-500">
         The largest active wars
+        <InfoDot topic="largest_wars" label="The largest active wars" />
       </h3>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {ACTIVE_CONFLICTS.map((c) => (

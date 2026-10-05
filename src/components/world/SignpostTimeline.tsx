@@ -1,5 +1,6 @@
 import type { WorldSignpost } from '../../lib/types'
 import { forceByKey } from '../../data/forces'
+import { InfoDot } from '../InfoDot'
 
 interface Props {
   signposts: WorldSignpost[]
@@ -49,7 +50,10 @@ export function SignpostTimeline({ signposts }: Props) {
       {happened.length > 0 && (
         <div className="mb-6">
           <span className="eyebrow text-moss-300">What just happened</span>
-          <h2 className="mt-1 mb-4 font-display text-xl text-sand-100">Signpost updates</h2>
+          <h2 className="mt-1 mb-4 flex items-center gap-2 font-display text-xl text-sand-100">
+            Signpost updates
+            <InfoDot topic="signpost_updates" label="Signpost updates" />
+          </h2>
           <ol className="relative space-y-4 border-l border-moss-800/60 pl-5">
             {happened.map((s, i) => (
               <li key={s.id ?? `h${i}`} className="relative">
@@ -77,7 +81,10 @@ export function SignpostTimeline({ signposts }: Props) {
 
       {/* Watch next — upcoming, with past-due flagged */}
       <span className="eyebrow">Watch next</span>
-      <h2 className="mt-1 mb-4 font-display text-xl text-sand-100">Signposts</h2>
+      <h2 className="mt-1 mb-4 flex items-center gap-2 font-display text-xl text-sand-100">
+        Signposts
+        <InfoDot topic="signposts" label="Signposts" />
+      </h2>
       <ol className="relative space-y-4 border-l border-soil-700 pl-5">
         {upcoming.map((s, i) => {
           const pastDue = !!s.event_date && s.event_date < today

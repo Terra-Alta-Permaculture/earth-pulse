@@ -70,20 +70,32 @@ export function ChildrensRights({ live }: { live?: WorldHuman['children'] }) {
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.childLabour}M</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.childLabour}M</span>
+            <InfoDot topic="child_labour" label="Child labour" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{S.childLabourNote}</span>
         </div>
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.outOfSchool}M</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.outOfSchool}M</span>
+            <InfoDot topic="out_of_school" label="Out of school" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{S.outOfSchoolNote}</span>
         </div>
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.inConflict}M</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.inConflict}M</span>
+            <InfoDot topic="child_conflict" label="Children in conflict zones" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{S.inConflictNote}</span>
         </div>
         {/* Live: under-5 mortality */}
         <div className="rounded-xl border border-moss-800/40 bg-moss-950/20 p-4">
-          <span className="stat-num block text-3xl text-moss-200">{mort.v.toFixed(0)}</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-moss-200">{mort.v.toFixed(0)}</span>
+            <InfoDot topic="child_mortality" label="Under-5 mortality" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">
             under-5 deaths per 1,000 births · {mort.live ? `World Bank ${mort.year}` : `~${mort.year}`}
           </span>

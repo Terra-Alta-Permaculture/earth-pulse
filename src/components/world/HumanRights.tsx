@@ -38,25 +38,38 @@ export function HumanRights({ live }: { live?: WorldHuman['human_rights'] }) {
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.declineYears}</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.declineYears}</span>
+            <InfoDot topic="hr_decline" label="Years of decline" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{S.declineNote}</span>
         </div>
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.notFreePct}%</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.notFreePct}%</span>
+            <InfoDot topic="hr_not_free" label="“Not Free” countries" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{S.notFreeNote}</span>
         </div>
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.autocracyPct}%</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.autocracyPct}%</span>
+            <InfoDot topic="hr_autocracy" label="Autocratic rule" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{S.autocracyNote}</span>
         </div>
         <div className="rounded-xl border border-ember-800/40 bg-ember-950/20 p-4">
-          <span className="stat-num block text-3xl text-ember-200">{S.openCivicPct}%</span>
+          <span className="flex items-center gap-1.5">
+            <span className="stat-num text-3xl text-ember-200">{S.openCivicPct}%</span>
+            <InfoDot topic="hr_open_civic" label="Open civic space" />
+          </span>
           <span className="mt-1 block text-[0.78rem] leading-snug text-sand-400">{S.openCivicNote}</span>
         </div>
       </div>
 
-      <h3 className="mt-5 text-[0.8rem] uppercase tracking-wide text-sand-500">
+      <h3 className="mt-5 flex items-center gap-1.5 text-[0.8rem] uppercase tracking-wide text-sand-500">
         What monitors are flagging
+        <InfoDot topic="hr_concerns" label="What monitors are flagging" />
       </h3>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {HR_CONCERNS.map((c) => (

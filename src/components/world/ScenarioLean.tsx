@@ -1,4 +1,5 @@
 import { SCENARIOS } from '../../data/forces'
+import { InfoDot } from '../InfoDot'
 
 interface Props {
   lean: Record<'A' | 'B' | 'C' | 'D', number>
@@ -18,7 +19,10 @@ export function ScenarioLean({ lean, rationale }: Props) {
       <div className="flex items-end justify-between">
         <div>
           <span className="eyebrow">Where it's heading</span>
-          <h2 className="mt-1 font-display text-xl text-sand-100">Scenario lean</h2>
+          <h2 className="mt-1 flex items-center gap-2 font-display text-xl text-sand-100">
+            Scenario lean
+            <InfoDot topic="scenario_lean" label="Scenario lean" />
+          </h2>
         </div>
         <span className="rounded-full border border-soil-600 px-2 py-0.5 text-[0.6rem] text-sand-500">
           Judgment, not prediction
