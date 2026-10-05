@@ -218,7 +218,7 @@ export function NovaPage() {
             My hope is simple: that from here, I — and anyone who visits — might think a little more
             freely.
           </p>
-          <p className="mt-3 text-sand-400">— Pedro</p>
+          <p className="mt-3 text-sand-400">— Pedro Valdjiu</p>
         </div>
       </Section>
 
