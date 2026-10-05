@@ -1,5 +1,12 @@
 import { useState } from 'react'
-import { emergeEvents, EMERGE_GUILD, EMERGE_QUESTS, EMERGE_URL } from '../lib/emerge'
+import {
+  emergeEvents,
+  setEmergePlace,
+  useEmergePlace,
+  EMERGE_GUILD,
+  EMERGE_QUESTS,
+  EMERGE_URL,
+} from '../lib/emerge'
 import { InfoDot } from './InfoDot'
 
 // The Act tab: from knowing to doing. Every action opens Emerge, Terra Alta's
@@ -17,7 +24,8 @@ const ACTIONS: { icon: string; title: string; why: string; q: string }[] = [
 type NearStatus = 'idle' | 'locating' | 'ready' | 'denied'
 
 export function ActPage() {
-  const [near, setNear] = useState<{ status: NearStatus; url?: string }>({ status: 'idle' })
+  const here = useEmergePlace()
+  const [near, setNear] = useState<{ status: NearStatus }>({ status: 'idle' })
 
   const findNear = () => {
     if (!('geolocation' in navigator)) {
@@ -26,11 +34,10 @@ export function ActPage() {
     }
     setNear({ status: 'locating' })
     navigator.geolocation.getCurrentPosition(
-      (pos) =>
-        setNear({
-          status: 'ready',
-          url: emergeEvents({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-        }),
+      (pos) => {
+        setEmergePlace({ lat: pos.coords.latitude, lng: pos.coords.longitude })
+        setNear({ status: 'ready' })
+      },
       () => setNear({ status: 'denied' }),
       { enableHighAccuracy: false, timeout: 12_000, maximumAge: 600_000 },
     )
@@ -53,14 +60,14 @@ export function ActPage() {
         </p>
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          {near.status === 'ready' && near.url ? (
+          {here ? (
             <a
-              href={near.url}
+              href={emergeEvents(here)}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg bg-moss-600 px-4 py-2 text-sm font-medium text-soil-950 transition-colors hover:bg-moss-500"
             >
-              Open events near you on Emerge →
+              Open events near {here.place ?? 'you'} on Emerge →
             </a>
           ) : (
             <button
@@ -99,7 +106,7 @@ export function ActPage() {
         {ACTIONS.map((a) => (
           <a
             key={a.q}
-            href={emergeEvents({ q: a.q })}
+            href={emergeEvents({ q: a.q, ...here })}
             target="_blank"
             rel="noopener noreferrer"
             className="card group block p-4 transition-colors hover:border-moss-700"
@@ -108,7 +115,7 @@ export function ActPage() {
             <h3 className="mt-2 text-sm font-medium text-sand-100">{a.title}</h3>
             <p className="mt-1 text-[0.78rem] leading-snug text-sand-400">{a.why}</p>
             <span className="mt-2 block text-[0.72rem] text-moss-300 group-hover:text-moss-200">
-              Find “{a.q}” events →
+              Find “{a.q}” events{here?.place ? ` near ${here.place}` : here ? ' near you' : ''} →
             </span>
           </a>
         ))}

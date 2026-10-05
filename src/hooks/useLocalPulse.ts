@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { setEmergePlace } from '../lib/emerge'
 
 export type LocalStatus =
   | 'idle'
@@ -247,6 +248,7 @@ export function useLocalPulse() {
           local: null,
         })
         setStatus('ready')
+        setEmergePlace({ lat, lng: lon, place: place.split(',')[0] })
 
         // Localization (OpenStreetMap/Overpass) is slow — load it in the
         // background so it never blocks the core pulse.
