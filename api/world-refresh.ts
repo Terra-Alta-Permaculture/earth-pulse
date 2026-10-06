@@ -166,11 +166,13 @@ const EMIT_TOOL = {
                 },
               },
             },
+            required: ['pheics', 'top_threat', 'outbreaks'],
           },
         },
+        required: ['conflicts', 'human_rights', 'children', 'nature', 'animals', 'health'],
       },
     },
-    required: ['summary', 'scenario_lean', 'lean_rationale', 'forces'],
+    required: ['summary', 'scenario_lean', 'lean_rationale', 'forces', 'human_indicators'],
   },
 }
 
