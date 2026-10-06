@@ -7,6 +7,7 @@ import { InfoDot } from '../InfoDot'
 import { ScenarioLean } from './ScenarioLean'
 import { SignpostTimeline } from './SignpostTimeline'
 import { ActiveConflicts } from './ActiveConflicts'
+import { HealthWatch } from './HealthWatch'
 import { GenderEquality } from './GenderEquality'
 import { HumanRights } from './HumanRights'
 import { ChildrensRights } from './ChildrensRights'
@@ -130,6 +131,7 @@ export function WorldPulsePage() {
 
       {/* The widening circle of rights — wars, equality, people, nature, animals */}
       <ActiveConflicts live={human?.conflicts} />
+      <HealthWatch live={human?.health} />
       <GenderEquality />
       <HumanRights live={human?.human_rights} />
       <ChildrensRights live={human?.children} />

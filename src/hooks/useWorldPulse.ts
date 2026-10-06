@@ -19,6 +19,11 @@ export interface WorldHuman {
     land_animals_bn?: number; wildlife_decline_pct?: number
     sentience_jurisdictions?: number; as_of?: string
   }
+  health?: {
+    life_expectancy?: number; pheics?: number; outbreaks_tracked?: number
+    top_threat?: string; as_of?: string
+    outbreaks?: { name: string; place?: string; note?: string }[]
+  }
 }
 
 export interface WorldPulseState {
