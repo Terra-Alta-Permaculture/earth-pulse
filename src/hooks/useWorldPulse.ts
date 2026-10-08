@@ -24,6 +24,10 @@ export interface WorldHuman {
     top_threat?: string; as_of?: string
     outbreaks?: { name: string; place?: string; note?: string }[]
   }
+  markets?: {
+    stocks_note?: string; minerals_note?: string
+    china_mining_pct?: number; china_processing_pct?: number; as_of?: string
+  }
 }
 
 export interface WorldPulseState {

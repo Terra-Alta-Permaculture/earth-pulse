@@ -13,6 +13,7 @@ import { HumanRights } from './HumanRights'
 import { ChildrensRights } from './ChildrensRights'
 import { NatureRights } from './NatureRights'
 import { AnimalRights } from './AnimalRights'
+import { MarketsPanel } from './MarketsPanel'
 
 const reportUrl = import.meta.env.VITE_WORLD_REPORT_URL as string | undefined
 
@@ -137,6 +138,9 @@ export function WorldPulsePage() {
       <ChildrensRights live={human?.children} />
       <NatureRights live={human?.nature} />
       <AnimalRights live={human?.animals} />
+
+      {/* The money layer */}
+      <MarketsPanel live={human?.markets} />
 
       {/* Scenario lean */}
       {weekly && <ScenarioLean lean={weekly.scenario_lean} rationale={weekly.lean_rationale} />}
