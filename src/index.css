@@ -42,3 +42,40 @@
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* ── Collapsible panels (shorter mobile scroll) ───────────────────── */
+.collapsible {
+  position: relative;
+}
+.collapsible-toggle {
+  position: absolute;
+  top: 1.3rem;
+  right: 1.1rem;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 0.55rem;
+  color: #9aa094;
+  background: transparent;
+}
+.collapsible-toggle:hover {
+  color: #d7dbce;
+  background: rgba(255, 255, 255, 0.05);
+}
+/* keep the chevron clear of the panel's "as of / live" meta text */
+.collapsible > section > :first-child {
+  padding-right: 2.4rem;
+}
+/* collapsed: show only the panel's header row */
+.collapsible.is-collapsed > section > :not(:first-child) {
+  display: none;
+}
+.collapsible.is-collapsed > section {
+  cursor: pointer;
+}
+.collapsible.is-collapsed > section:hover {
+  border-color: rgba(120, 160, 120, 0.35);
+}
