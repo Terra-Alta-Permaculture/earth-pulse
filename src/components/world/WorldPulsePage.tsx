@@ -15,6 +15,20 @@ import { NatureRights } from './NatureRights'
 import { AnimalRights } from './AnimalRights'
 import { MarketsPanel } from './MarketsPanel'
 import { Collapsible } from '../Collapsible'
+import { SectionNav } from '../SectionNav'
+
+const NAV_ITEMS = [
+  { id: 'forces', label: '🧭 Forces' },
+  { id: 'wars', label: '⚔ Wars' },
+  { id: 'health', label: '🦠 Health' },
+  { id: 'gender', label: '⚖ Gender' },
+  { id: 'rights', label: '✊ Rights' },
+  { id: 'children', label: '🧒 Children' },
+  { id: 'nature', label: '🌍 Nature' },
+  { id: 'animals', label: '🐾 Animals' },
+  { id: 'markets', label: '💰 Markets' },
+  { id: 'outlook', label: '🔭 Outlook' },
+]
 
 const reportUrl = import.meta.env.VITE_WORLD_REPORT_URL as string | undefined
 
@@ -54,6 +68,8 @@ export function WorldPulsePage() {
 
   return (
     <>
+      <SectionNav items={NAV_ITEMS} />
+
       {/* Weekly brief */}
       <section className="card mb-6 p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -113,36 +129,36 @@ export function WorldPulsePage() {
       </div>
 
       {/* Force grid */}
-      <div className="mb-2 flex items-center justify-between">
-        <h2 className="flex items-center gap-2 font-display text-xl text-sand-100">
-          The {FORCES.length} forces
-          <InfoDot topic="world_forces" label="The forces" />
-        </h2>
-        <button
-          onClick={() => setSortByTension((v) => !v)}
-          className="rounded-lg border border-soil-600 bg-soil-800 px-3 py-1.5 text-xs font-medium text-sand-300 transition-colors hover:bg-soil-700"
-        >
-          {sortByTension ? 'Default order' : 'Highest tension first'}
-        </button>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {ordered.map((r) => (
-          <ForceCard key={r.force_key} reading={r} history={historyByForce[r.force_key] ?? [r]} />
-        ))}
-      </div>
+      <Collapsible id="forces" title={`The ${FORCES.length} forces`} infoTopic="world_forces" infoLabel="The forces">
+        <div className="mb-3 flex justify-end">
+          <button
+            onClick={() => setSortByTension((v) => !v)}
+            className="rounded-lg border border-soil-600 bg-soil-800 px-3 py-1.5 text-xs font-medium text-sand-300 transition-colors hover:bg-soil-700"
+          >
+            {sortByTension ? 'Default order' : 'Highest tension first'}
+          </button>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {ordered.map((r) => (
+            <ForceCard key={r.force_key} reading={r} history={historyByForce[r.force_key] ?? [r]} />
+          ))}
+        </div>
+      </Collapsible>
 
       {/* The human state of the world — tap a panel to open it (collapsed on mobile) */}
-      <Collapsible><ActiveConflicts live={human?.conflicts} /></Collapsible>
-      <Collapsible><HealthWatch live={human?.health} /></Collapsible>
-      <Collapsible><GenderEquality /></Collapsible>
-      <Collapsible><HumanRights live={human?.human_rights} /></Collapsible>
-      <Collapsible><ChildrensRights live={human?.children} /></Collapsible>
-      <Collapsible><NatureRights live={human?.nature} /></Collapsible>
-      <Collapsible><AnimalRights live={human?.animals} /></Collapsible>
-      <Collapsible><MarketsPanel live={human?.markets} /></Collapsible>
+      <Collapsible id="wars"><ActiveConflicts live={human?.conflicts} /></Collapsible>
+      <Collapsible id="health"><HealthWatch live={human?.health} /></Collapsible>
+      <Collapsible id="gender"><GenderEquality /></Collapsible>
+      <Collapsible id="rights"><HumanRights live={human?.human_rights} /></Collapsible>
+      <Collapsible id="children"><ChildrensRights live={human?.children} /></Collapsible>
+      <Collapsible id="nature"><NatureRights live={human?.nature} /></Collapsible>
+      <Collapsible id="animals"><AnimalRights live={human?.animals} /></Collapsible>
+      <Collapsible id="markets"><MarketsPanel live={human?.markets} /></Collapsible>
 
       {/* Scenario lean */}
-      {weekly && <ScenarioLean lean={weekly.scenario_lean} rationale={weekly.lean_rationale} />}
+      <div id="outlook" className="scroll-mt-20">
+        {weekly && <ScenarioLean lean={weekly.scenario_lean} rationale={weekly.lean_rationale} />}
+      </div>
 
       {/* Signposts */}
       {signposts.length > 0 && <SignpostTimeline signposts={signposts} />}

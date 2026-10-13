@@ -46,6 +46,13 @@
 /* ── Collapsible panels (shorter mobile scroll) ───────────────────── */
 .collapsible {
   position: relative;
+  margin-bottom: 1.5rem;
+}
+/* normalize the wrapped section's own margins so the chevron lines up with the
+   header whether the panel used mb-6 (World) or mt-6 (Planet) */
+.collapsible > section {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .collapsible-toggle {
   position: absolute;

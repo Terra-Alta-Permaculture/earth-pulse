@@ -3,6 +3,21 @@ import type { LiveState } from '../hooks/useLiveSignals'
 import { liveBalance } from '../data/liveSources'
 import { ErrorBoundary } from './ErrorBoundary'
 import { InfoDot } from './InfoDot'
+import { Collapsible } from './Collapsible'
+import { SectionNav } from './SectionNav'
+
+const PLANET_NAV = [
+  { id: 'map', label: '◍ Live map' },
+  { id: 'pulse', label: '◎ Your pulse' },
+  { id: 'streams', label: '↕ Streams' },
+  { id: 'maps', label: '🗺 Maps' },
+  { id: 'balance', label: '⚖ Balance' },
+  { id: 'history', label: '📈 Trends' },
+  { id: 'doughnut', label: '◉ Doughnut' },
+  { id: 'law', label: '§ Law' },
+  { id: 'seed', label: '🌱 Seed' },
+  { id: 'soil', label: '🪱 Soil' },
+]
 import { DailyBriefing } from './DailyBriefing'
 import { PlanetSound } from './PlanetSound'
 import { ShareSnapshot } from './ShareSnapshot'
@@ -44,6 +59,8 @@ export function PlanetPulsePage({ live }: { live: LiveState }) {
 
   return (
     <>
+      <SectionNav items={PLANET_NAV} />
+
       {signals.length > 0 && (
         <div className="mb-5 space-y-3">
           <DailyBriefing signals={signals} balance={balance} />
@@ -56,11 +73,11 @@ export function PlanetPulsePage({ live }: { live: LiveState }) {
 
       <VitalsStrip signals={vitals} lastUpdated={lastUpdated} loading={loading} />
 
-      <div className="mt-5">
+      <div id="map" className="mt-5 scroll-mt-20">
         <WorldMap />
       </div>
 
-      <div className="mt-5">
+      <div id="pulse" className="mt-5 scroll-mt-20">
         <YourPulse />
       </div>
 
@@ -79,16 +96,18 @@ export function PlanetPulsePage({ live }: { live: LiveState }) {
             <InfoDot topic="the_line" label="Above & below the line" />
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2">
+          <div id="streams" className="grid gap-5 scroll-mt-20 lg:grid-cols-2">
             <LiveStreamPanel stream="crisis" signals={crisis} />
             <LiveStreamPanel stream="regeneration" signals={regen} />
           </div>
 
-          <ErrorBoundary area="Maps">
-            <DualMap />
-          </ErrorBoundary>
+          <Collapsible id="maps">
+            <ErrorBoundary area="Maps">
+              <DualMap />
+            </ErrorBoundary>
+          </Collapsible>
 
-          <div className="mt-5">
+          <div id="balance" className="mt-5 scroll-mt-20">
             <BalanceMeter balance={balance} />
             <p className="mt-2 text-[0.68rem] leading-snug text-sand-700">
               A rough directional composite of the ecological indicators above —
@@ -100,29 +119,41 @@ export function PlanetPulsePage({ live }: { live: LiveState }) {
             </p>
           </div>
 
-          <ErrorBoundary area="Planet history">
-            <PlanetHistory signals={signals} balance={balance} />
-          </ErrorBoundary>
+          <Collapsible id="history">
+            <ErrorBoundary area="Planet history">
+              <PlanetHistory signals={signals} balance={balance} />
+            </ErrorBoundary>
+          </Collapsible>
 
-          <ErrorBoundary area="Doughnut">
-            <Doughnut signals={signals} />
-          </ErrorBoundary>
+          <Collapsible id="doughnut">
+            <ErrorBoundary area="Doughnut">
+              <Doughnut signals={signals} />
+            </ErrorBoundary>
+          </Collapsible>
 
-          <ErrorBoundary area="Doughnut movement">
-            <DoughnutMovement />
-          </ErrorBoundary>
+          <Collapsible id="movement">
+            <ErrorBoundary area="Doughnut movement">
+              <DoughnutMovement />
+            </ErrorBoundary>
+          </Collapsible>
 
-          <ErrorBoundary area="Law tracker">
-            <LawTracker />
-          </ErrorBoundary>
+          <Collapsible id="law">
+            <ErrorBoundary area="Law tracker">
+              <LawTracker />
+            </ErrorBoundary>
+          </Collapsible>
 
-          <ErrorBoundary area="Seed sovereignty">
-            <SeedSovereignty />
-          </ErrorBoundary>
+          <Collapsible id="seed">
+            <ErrorBoundary area="Seed sovereignty">
+              <SeedSovereignty />
+            </ErrorBoundary>
+          </Collapsible>
 
-          <ErrorBoundary area="Soil not oil">
-            <SoilNotOil />
-          </ErrorBoundary>
+          <Collapsible id="soil">
+            <ErrorBoundary area="Soil not oil">
+              <SoilNotOil />
+            </ErrorBoundary>
+          </Collapsible>
 
           <ErrorBoundary area="Scenarios panel">
             <ScenarioPanel rows={rows} />
