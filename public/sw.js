@@ -2,7 +2,7 @@
 // Dependency-free. The app is all-live, so data APIs always go to the network;
 // we only cache the app shell + static build assets so it opens instantly / offline.
 
-const CACHE = 'earthpulse-shell-v2'
+const CACHE = 'earthpulse-shell-v3'
 const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/favicon.svg']
 
 self.addEventListener('install', (event) => {
