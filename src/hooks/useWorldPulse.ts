@@ -28,6 +28,10 @@ export interface WorldHuman {
     stocks_note?: string; minerals_note?: string
     china_mining_pct?: number; china_processing_pct?: number; as_of?: string
   }
+  culture?: {
+    religion_note?: string; language_note?: string
+    indigenous_note?: string; medicine_note?: string; as_of?: string
+  }
 }
 
 export interface WorldPulseState {

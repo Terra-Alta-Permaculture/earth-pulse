@@ -14,6 +14,10 @@ import { ChildrensRights } from './ChildrensRights'
 import { NatureRights } from './NatureRights'
 import { AnimalRights } from './AnimalRights'
 import { MarketsPanel } from './MarketsPanel'
+import { IndigenousPeoples } from './IndigenousPeoples'
+import { Languages } from './Languages'
+import { Faiths } from './Faiths'
+import { MedicinePanel } from './MedicinePanel'
 import { Collapsible } from '../Collapsible'
 import { SectionNav } from '../SectionNav'
 
@@ -27,6 +31,10 @@ const NAV_ITEMS = [
   { id: 'nature', label: '🌍 Nature' },
   { id: 'animals', label: '🐾 Animals' },
   { id: 'markets', label: '💰 Markets' },
+  { id: 'indigenous', label: '🪶 Indigenous' },
+  { id: 'tongues', label: '🗣️ Tongues' },
+  { id: 'faiths', label: '🕊️ Faiths' },
+  { id: 'medicine', label: '⚕️ Medicine' },
   { id: 'outlook', label: '🔭 Outlook' },
 ]
 
@@ -154,6 +162,12 @@ export function WorldPulsePage() {
       <Collapsible id="nature"><NatureRights live={human?.nature} /></Collapsible>
       <Collapsible id="animals"><AnimalRights live={human?.animals} /></Collapsible>
       <Collapsible id="markets"><MarketsPanel live={human?.markets} /></Collapsible>
+
+      {/* Peoples, faiths & tongues — the diversity of being human */}
+      <Collapsible id="indigenous"><IndigenousPeoples live={human?.culture} /></Collapsible>
+      <Collapsible id="tongues"><Languages live={human?.culture} /></Collapsible>
+      <Collapsible id="faiths"><Faiths live={human?.culture} /></Collapsible>
+      <Collapsible id="medicine"><MedicinePanel live={human?.culture} /></Collapsible>
 
       {/* Scenario lean */}
       <div id="outlook" className="scroll-mt-20">
