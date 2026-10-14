@@ -1,11 +1,12 @@
 /** A sticky row of chips that jump to (and auto-expand) a section. */
 export function SectionNav({ items }: { items: { id: string; label: string }[] }) {
   const go = (id: string) => {
-    // ask the matching Collapsible to open, then scroll to it
+    // ask the matching Collapsible to open (and any lens filter to reset), then
+    // scroll — a short delay lets a hidden band re-show before we scroll to it.
     window.dispatchEvent(new CustomEvent('ep-expand', { detail: id }))
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    })
+    }, 110)
   }
   return (
     <nav className="sticky top-0 z-20 -mx-4 mb-5 border-b border-soil-800/80 bg-soil-950/85 px-4 py-2 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">

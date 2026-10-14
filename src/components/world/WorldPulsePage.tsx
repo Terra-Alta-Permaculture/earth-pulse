@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { FORCES } from '../../data/forces'
 import { useWorldPulse } from '../../hooks/useWorldPulse'
@@ -21,28 +21,57 @@ import { MedicinePanel } from './MedicinePanel'
 import { Collapsible } from '../Collapsible'
 import { SectionNav } from '../SectionNav'
 
+// Ordered by the three bands: ↓ below · ◑ floor · ↑ above
 const NAV_ITEMS = [
   { id: 'forces', label: '🧭 Forces' },
   { id: 'wars', label: '⚔ Wars' },
+  { id: 'markets', label: '💰 Markets' },
   { id: 'health', label: '🦠 Health' },
   { id: 'gender', label: '⚖ Gender' },
   { id: 'rights', label: '✊ Rights' },
   { id: 'children', label: '🧒 Children' },
-  { id: 'nature', label: '🌍 Nature' },
-  { id: 'animals', label: '🐾 Animals' },
-  { id: 'markets', label: '💰 Markets' },
-  { id: 'indigenous', label: '🪶 Indigenous' },
-  { id: 'tongues', label: '🗣️ Tongues' },
   { id: 'faiths', label: '🕊️ Faiths' },
+  { id: 'tongues', label: '🗣️ Tongues' },
   { id: 'medicine', label: '⚕️ Medicine' },
+  { id: 'nature', label: '🌍 Nature' },
+  { id: 'indigenous', label: '🪶 Indigenous' },
+  { id: 'animals', label: '🐾 Animals' },
   { id: 'outlook', label: '🔭 Outlook' },
 ]
+
+type Lens = 'all' | 'below' | 'floor' | 'above'
+const LENSES: { k: Lens; label: string }[] = [
+  { k: 'all', label: 'All' },
+  { k: 'below', label: '↓ Below' },
+  { k: 'floor', label: '◑ Floor' },
+  { k: 'above', label: '↑ Above' },
+]
+
+function BandHeader({ tone, title, desc }: { tone: 'below' | 'floor' | 'above'; title: string; desc: string }) {
+  const color = tone === 'below' ? 'text-ember-300' : tone === 'above' ? 'text-moss-300' : 'text-sand-300'
+  return (
+    <div className="mb-3 mt-8 flex flex-wrap items-baseline gap-x-2 border-t border-soil-800/70 pt-5">
+      <span className={`text-xs font-semibold uppercase tracking-[0.18em] ${color}`}>{title}</span>
+      <span className="text-[0.72rem] text-sand-600">— {desc}</span>
+    </div>
+  )
+}
 
 const reportUrl = import.meta.env.VITE_WORLD_REPORT_URL as string | undefined
 
 export function WorldPulsePage() {
   const { weekly, latestByForce, historyByForce, signposts, human, loading, isSample } = useWorldPulse()
   const [sortByTension, setSortByTension] = useState(false)
+  const [lens, setLens] = useState<Lens>('all')
+
+  // A jump-nav tap should always reveal the section, even across a lens filter.
+  useEffect(() => {
+    const h = () => setLens('all')
+    window.addEventListener('ep-expand', h)
+    return () => window.removeEventListener('ep-expand', h)
+  }, [])
+
+  const show = (band: 'below' | 'floor' | 'above') => (lens === 'all' || lens === band ? '' : 'hidden')
 
   const readings = FORCES.map((f) => latestByForce[f.key]).filter(
     (r): r is NonNullable<typeof r> => Boolean(r),
@@ -136,38 +165,73 @@ export function WorldPulsePage() {
         </div>
       </div>
 
-      {/* Force grid */}
-      <Collapsible id="forces" title={`The ${FORCES.length} forces`} infoTopic="world_forces" infoLabel="The forces">
-        <div className="mb-3 flex justify-end">
-          <button
-            onClick={() => setSortByTension((v) => !v)}
-            className="rounded-lg border border-soil-600 bg-soil-800 px-3 py-1.5 text-xs font-medium text-sand-300 transition-colors hover:bg-soil-700"
-          >
-            {sortByTension ? 'Default order' : 'Highest tension first'}
-          </button>
+      {/* Vertical Politics lens — read the world below or above the line */}
+      <div id="lens" className="scroll-mt-20">
+        <div className="mb-2 flex flex-wrap items-center justify-center gap-2 text-center">
+          <span className="text-xs uppercase tracking-[0.2em] text-sand-500">
+            Not left or right — <span className="text-ember-300">below the line</span> or{' '}
+            <span className="text-moss-300">above</span> it
+          </span>
+          <InfoDot topic="the_line" label="Above & below the line" />
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {ordered.map((r) => (
-            <ForceCard key={r.force_key} reading={r} history={historyByForce[r.force_key] ?? [r]} />
+        <div className="mb-1 flex flex-wrap justify-center gap-1.5">
+          {LENSES.map((l) => (
+            <button
+              key={l.k}
+              onClick={() => setLens(l.k)}
+              className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                lens === l.k
+                  ? 'border-moss-500 bg-moss-900/40 text-sand-100'
+                  : 'border-soil-700 bg-soil-800/50 text-sand-400 hover:text-sand-200'
+              }`}
+            >
+              {l.label}
+            </button>
           ))}
         </div>
-      </Collapsible>
+      </div>
 
-      {/* The human state of the world — tap a panel to open it (collapsed on mobile) */}
-      <Collapsible id="wars"><ActiveConflicts live={human?.conflicts} /></Collapsible>
-      <Collapsible id="health"><HealthWatch live={human?.health} /></Collapsible>
-      <Collapsible id="gender"><GenderEquality /></Collapsible>
-      <Collapsible id="rights"><HumanRights live={human?.human_rights} /></Collapsible>
-      <Collapsible id="children"><ChildrensRights live={human?.children} /></Collapsible>
-      <Collapsible id="nature"><NatureRights live={human?.nature} /></Collapsible>
-      <Collapsible id="animals"><AnimalRights live={human?.animals} /></Collapsible>
-      <Collapsible id="markets"><MarketsPanel live={human?.markets} /></Collapsible>
+      {/* ↓ Below the line — extraction, concentration, domination */}
+      <div className={show('below')}>
+        <BandHeader tone="below" title="↓ Below the line" desc="what extracts, concentrates & dominates" />
+        <Collapsible id="forces" title={`The ${FORCES.length} forces`} infoTopic="world_forces" infoLabel="The forces">
+          <div className="mb-3 flex justify-end">
+            <button
+              onClick={() => setSortByTension((v) => !v)}
+              className="rounded-lg border border-soil-600 bg-soil-800 px-3 py-1.5 text-xs font-medium text-sand-300 transition-colors hover:bg-soil-700"
+            >
+              {sortByTension ? 'Default order' : 'Highest tension first'}
+            </button>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {ordered.map((r) => (
+              <ForceCard key={r.force_key} reading={r} history={historyByForce[r.force_key] ?? [r]} />
+            ))}
+          </div>
+        </Collapsible>
+        <Collapsible id="wars"><ActiveConflicts live={human?.conflicts} /></Collapsible>
+        <Collapsible id="markets"><MarketsPanel live={human?.markets} /></Collapsible>
+      </div>
 
-      {/* Peoples, faiths & tongues — the diversity of being human */}
-      <Collapsible id="indigenous"><IndigenousPeoples live={human?.culture} /></Collapsible>
-      <Collapsible id="tongues"><Languages live={human?.culture} /></Collapsible>
-      <Collapsible id="faiths"><Faiths live={human?.culture} /></Collapsible>
-      <Collapsible id="medicine"><MedicinePanel live={human?.culture} /></Collapsible>
+      {/* ◑ The human floor — where people actually stand (social foundation) */}
+      <div className={show('floor')}>
+        <BandHeader tone="floor" title="◑ The human floor" desc="where people actually stand — met or short" />
+        <Collapsible id="health"><HealthWatch live={human?.health} /></Collapsible>
+        <Collapsible id="gender"><GenderEquality /></Collapsible>
+        <Collapsible id="rights"><HumanRights live={human?.human_rights} /></Collapsible>
+        <Collapsible id="children"><ChildrensRights live={human?.children} /></Collapsible>
+        <Collapsible id="faiths"><Faiths live={human?.culture} /></Collapsible>
+        <Collapsible id="tongues"><Languages live={human?.culture} /></Collapsible>
+        <Collapsible id="medicine"><MedicinePanel live={human?.culture} /></Collapsible>
+      </div>
+
+      {/* ↑ Above the line — regeneration, rights, the widening circle */}
+      <div className={show('above')}>
+        <BandHeader tone="above" title="↑ Above the line" desc="what regenerates, distributes & widens rights" />
+        <Collapsible id="nature"><NatureRights live={human?.nature} /></Collapsible>
+        <Collapsible id="indigenous"><IndigenousPeoples live={human?.culture} /></Collapsible>
+        <Collapsible id="animals"><AnimalRights live={human?.animals} /></Collapsible>
+      </div>
 
       {/* Scenario lean */}
       <div id="outlook" className="scroll-mt-20">
