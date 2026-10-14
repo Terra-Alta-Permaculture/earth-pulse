@@ -188,7 +188,7 @@ const EMIT_TOOL = {
               medicine_note: { type: 'string' },
               as_of: { type: 'string' },
             },
-            required: ['indigenous_note', 'medicine_note', 'religion_note'],
+            required: ['indigenous_note'],
           },
         },
         required: ['conflicts', 'human_rights', 'children', 'nature', 'animals', 'health', 'markets', 'culture'],
@@ -219,7 +219,7 @@ async function structure(findings: string, week_start: string): Promise<any> {
     headers: headers(),
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 24000,
+      max_tokens: 32000,
       system: STRUCTURE_SYSTEM,
       tools: [EMIT_TOOL],
       tool_choice: { type: 'tool', name: 'emit_world' },
