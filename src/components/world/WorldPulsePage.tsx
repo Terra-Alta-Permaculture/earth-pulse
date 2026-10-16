@@ -18,6 +18,7 @@ import { IndigenousPeoples } from './IndigenousPeoples'
 import { Languages } from './Languages'
 import { Faiths } from './Faiths'
 import { MedicinePanel } from './MedicinePanel'
+import { PeopleRising } from './PeopleRising'
 import { Collapsible } from '../Collapsible'
 import { SectionNav } from '../SectionNav'
 
@@ -33,6 +34,7 @@ const NAV_ITEMS = [
   { id: 'faiths', label: '🕊️ Faiths' },
   { id: 'tongues', label: '🗣️ Tongues' },
   { id: 'medicine', label: '⚕️ Medicine' },
+  { id: 'protests', label: '✊ People' },
   { id: 'nature', label: '🌍 Nature' },
   { id: 'indigenous', label: '🪶 Indigenous' },
   { id: 'animals', label: '🐾 Animals' },
@@ -228,6 +230,7 @@ export function WorldPulsePage() {
       {/* ↑ Above the line — regeneration, rights, the widening circle */}
       <div className={show('above')}>
         <BandHeader tone="above" title="↑ Above the line" desc="what regenerates, distributes & widens rights" />
+        <Collapsible id="protests"><PeopleRising live={human?.movements} /></Collapsible>
         <Collapsible id="nature"><NatureRights live={human?.nature} /></Collapsible>
         <Collapsible id="indigenous"><IndigenousPeoples live={human?.culture} /></Collapsible>
         <Collapsible id="animals"><AnimalRights live={human?.animals} /></Collapsible>

@@ -32,6 +32,11 @@ export interface WorldHuman {
     religion_note?: string; language_note?: string
     indigenous_note?: string; medicine_note?: string; as_of?: string
   }
+  movements?: {
+    protests_above?: { name: string; place?: string; note?: string }[]
+    protests_below?: { name: string; place?: string; note?: string }[]
+    petitions_note?: string; as_of?: string
+  }
 }
 
 export interface WorldPulseState {
