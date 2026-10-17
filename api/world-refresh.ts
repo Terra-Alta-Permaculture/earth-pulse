@@ -1,5 +1,5 @@
 // EarthPulse — World Pulse weekly writer (Vercel Cron target).
-// Two-step for reliability: (1) research the twelve forces with Claude + web
+// Two-step for reliability: (1) research the thirteen forces with Claude + web
 // search → plain-text findings; (2) a second call with FORCED tool-use turns the
 // findings into guaranteed-valid JSON. Saves the week to Vercel Blob (26-week
 // history). No database.
@@ -20,7 +20,7 @@ const MAX_WEEKS = 26
 const FORCE_KEYS = [
   'us_power', 'us_china', 'chokepoints_energy', 'russia_europe',
   'institutions', 'living_planet', 'identity_religion', 'ai', 'money_trade',
-  'space_orbit', 'israel_us', 'elites',
+  'space_orbit', 'israel_us', 'elites', 'shadow_war',
 ]
 
 function isoMonday(d = new Date()): string {
@@ -40,7 +40,7 @@ function headers() {
 }
 
 // ── Step 1: research with web search → plain-text findings ────────────
-const RESEARCH_SYSTEM = `You are EarthPulse's geopolitics researcher. Research the LAST 7 DAYS across twelve forces (us_power, us_china, chokepoints_energy, russia_europe, institutions, living_planet, identity_religion, ai, money_trade, space_orbit, israel_us, elites). space_orbit = the space race and orbit: military/anti-satellite activity, mega-constellations, the near-absence of binding space law, Moon/resource competition, orbital debris. israel_us = Israel, the US and the world: Gaza and regional escalation, US military/diplomatic backing, ICJ/ICC proceedings, protests and shifting opinion, normalisation talks, Palestinian recognition. elites = the ruling elites: concentration of wealth and power — billionaire wealth, lobbying and campaign finance, media ownership, tax policy, state capture and revolving doors. Prefer primary/major sources (Reuters, AP, Al Jazeera, BBC, FT, IEA, IMF, WMO, Copernicus, FAO, UN, OCHA, ICJ, Crisis Group, SIPRI, ESA, UNOOSA, World Inequality Lab, Oxfam). Be politically neutral and factual.`
+const RESEARCH_SYSTEM = `You are EarthPulse's geopolitics researcher. Research the LAST 7 DAYS across thirteen forces (us_power, us_china, chokepoints_energy, russia_europe, institutions, living_planet, identity_religion, ai, money_trade, space_orbit, israel_us, elites, shadow_war). space_orbit = the space race and orbit: military/anti-satellite activity, mega-constellations, the near-absence of binding space law, Moon/resource competition, orbital debris. israel_us = Israel, the US and the world: Gaza and regional escalation, US military/diplomatic backing, ICJ/ICC proceedings, protests and shifting opinion, normalisation talks, Palestinian recognition. elites = the ruling elites: concentration of wealth and power — billionaire wealth, lobbying and campaign finance, media ownership, tax policy, state capture and revolving doors. shadow_war = the covert, undeclared conflict between states: intelligence operations, sabotage of infrastructure (undersea cables, pipelines, energy, rail), state-sponsored cyber-attacks and espionage, targeted killings, commercial spyware, disinformation and election interference, and the arrests, expulsions and attributions that expose them — report only what governments, courts, security services or credible investigators have stated or documented, and say clearly when attribution is alleged rather than confirmed. Prefer primary/major sources (Reuters, AP, Al Jazeera, BBC, FT, IEA, IMF, WMO, Copernicus, FAO, UN, OCHA, ICJ, Crisis Group, SIPRI, ESA, UNOOSA, World Inequality Lab, Oxfam, CSIS, Citizen Lab, Bellingcat, national security services). Be politically neutral and factual.`
 
 async function research(user: string): Promise<string> {
   let messages: any[] = [{ role: 'user', content: user }]
@@ -77,8 +77,8 @@ const EMIT_TOOL = {
       lean_rationale: { type: 'string' },
       forces: {
         type: 'array',
-        minItems: 12,
-        maxItems: 12,
+        minItems: 13,
+        maxItems: 13,
         items: {
           type: 'object',
           properties: {
@@ -214,7 +214,7 @@ const EMIT_TOOL = {
   },
 }
 
-const STRUCTURE_SYSTEM = `Convert the research briefing into the World Pulse reading via the emit_world tool. The forces array MUST contain exactly twelve objects, one for EACH of these keys and no others: us_power, us_china, chokepoints_energy, russia_europe, institutions, living_planet, identity_religion, ai, money_trade, space_orbit, israel_us, elites. If the briefing is thin on a force, still include it with your best estimate. Score each force's tension 0–10 with this rubric: 0–2 calm/improving; 3–4 elevated but stable; 5–6 high but managed (truces holding); 7–8 severe active crisis with spillover risk; 9–10 systemic. Twelve forces, exact keys.
+const STRUCTURE_SYSTEM = `Convert the research briefing into the World Pulse reading via the emit_world tool. The forces array MUST contain exactly thirteen objects, one for EACH of these keys and no others: us_power, us_china, chokepoints_energy, russia_europe, institutions, living_planet, identity_religion, ai, money_trade, space_orbit, israel_us, elites, shadow_war. If the briefing is thin on a force, still include it with your best estimate. Score each force's tension 0–10 with this rubric: 0–2 calm/improving; 3–4 elevated but stable; 5–6 high but managed (truces holding); 7–8 severe active crisis with spillover risk; 9–10 systemic. Thirteen forces, exact keys.
 
 scenario_lean is your best-judgment probability (%) for four scenarios over the next year, and the four MUST be positive numbers summing to exactly 100 (never zero):
 - A — Armed bargaining: great powers keep bargaining; chokepoints reopen slowly.
@@ -239,7 +239,7 @@ async function structure(findings: string, week_start: string): Promise<any> {
       system: STRUCTURE_SYSTEM,
       tools: [EMIT_TOOL],
       tool_choice: { type: 'tool', name: 'emit_world' },
-      messages: [{ role: 'user', content: `Week starting ${week_start}. Research briefing:\n\n${findings}\n\nEmit the World Pulse reading for all twelve forces now.` }],
+      messages: [{ role: 'user', content: `Week starting ${week_start}. Research briefing:\n\n${findings}\n\nEmit the World Pulse reading for all thirteen forces now.` }],
     }),
   })
   if (!res.ok) throw new Error(`structure ${res.status}: ${await res.text()}`)
@@ -311,13 +311,13 @@ export default async function handler(req: any, res: any) {
     for (const r of existing.readings) if (r.week_start === lastWeek) prevScore[r.force_key] = Number(r.tension)
 
     const findings = await research(
-      `This week starts ${week_start} (Monday, UTC). Last week's tension scores: ${JSON.stringify(prevScore)}. Do at most 6 targeted web searches covering the week's biggest developments across the twelve forces, then write a brief plain-text finding per force: what changed in the last 7 days, an estimated tension 0–10, one counterpoint, and 1–2 key numbers with dates and source URLs. For any of these upcoming signposts whose date has now passed, search for what actually happened and state the outcome in one factual sentence (or say still unresolved): ${JSON.stringify(existing.signposts.filter((s: any) => s.status !== 'happened').map((s: any) => s.title))}. Also flag up to 3 new dated events worth watching. Finally, in one short block, state the latest KNOWN headline figures (these are annual, not weekly — don't spend extra searches unless a brand-new report just dropped): active armed conflicts (UCDP state-based count, ICRC total, UNHCR displaced in millions); human rights (Freedom House years-of-decline & % in "Not Free" countries, V-Dem % under autocracy, CIVICUS % in open civic space); children (UNICEF/ILO child labour, UNESCO out-of-school, UNICEF children in conflict, in millions); Rights of Nature (initiatives worldwide & countries with provisions); animals (land animals farmed/yr in billions, WWF wildlife decline % since 1970, jurisdictions recognising sentience); and — this one IS current, so search it — health & outbreaks (WHO Disease Outbreak News): which Public Health Emergencies of International Concern are in effect, the top pandemic-potential threat right now, and the 6–8 most significant active disease outbreaks worldwide (name, place, one line each); and financial markets (also current, search it) — where global STOCK markets stand this week and what's driving them, plus the latest RARE-EARTH / critical-mineral development (export controls, supply deals, shortages); and the week's notable developments in religion worldwide, Indigenous rights (land rulings, defenders, territories), and a medical/health breakthrough; and the biggest CURRENT protests/demonstrations worldwide (both rights-widening and authoritarian/anti-rights ones) plus the biggest live petitions. Keep it brief.`,
+      `This week starts ${week_start} (Monday, UTC). Last week's tension scores: ${JSON.stringify(prevScore)}. Do at most 6 targeted web searches covering the week's biggest developments across the thirteen forces, then write a brief plain-text finding per force: what changed in the last 7 days, an estimated tension 0–10, one counterpoint, and 1–2 key numbers with dates and source URLs. For any of these upcoming signposts whose date has now passed, search for what actually happened and state the outcome in one factual sentence (or say still unresolved): ${JSON.stringify(existing.signposts.filter((s: any) => s.status !== 'happened').map((s: any) => s.title))}. Also flag up to 3 new dated events worth watching. Finally, in one short block, state the latest KNOWN headline figures (these are annual, not weekly — don't spend extra searches unless a brand-new report just dropped): active armed conflicts (UCDP state-based count, ICRC total, UNHCR displaced in millions); human rights (Freedom House years-of-decline & % in "Not Free" countries, V-Dem % under autocracy, CIVICUS % in open civic space); children (UNICEF/ILO child labour, UNESCO out-of-school, UNICEF children in conflict, in millions); Rights of Nature (initiatives worldwide & countries with provisions); animals (land animals farmed/yr in billions, WWF wildlife decline % since 1970, jurisdictions recognising sentience); and — this one IS current, so search it — health & outbreaks (WHO Disease Outbreak News): which Public Health Emergencies of International Concern are in effect, the top pandemic-potential threat right now, and the 6–8 most significant active disease outbreaks worldwide (name, place, one line each); and financial markets (also current, search it) — where global STOCK markets stand this week and what's driving them, plus the latest RARE-EARTH / critical-mineral development (export controls, supply deals, shortages); and the week's notable developments in religion worldwide, Indigenous rights (land rulings, defenders, territories), and a medical/health breakthrough; and the biggest CURRENT protests/demonstrations worldwide (both rights-widening and authoritarian/anti-rights ones) plus the biggest live petitions. Keep it brief.`,
     )
 
     const out = await structure(findings, week_start)
 
     // Validate
-    if (!Array.isArray(out.forces) || out.forces.length !== 12) throw new Error("expected 12 forces")
+    if (!Array.isArray(out.forces) || out.forces.length !== FORCE_KEYS.length) throw new Error(`expected ${FORCE_KEYS.length} forces`)
     const seen = new Set<string>()
     for (const f of out.forces) {
       if (!FORCE_KEYS.includes(f.force_key)) throw new Error(`bad force_key ${f.force_key}`)
@@ -325,7 +325,7 @@ export default async function handler(req: any, res: any) {
       if (typeof f.tension !== 'number' || f.tension < 0 || f.tension > 10) throw new Error(`bad tension ${f.force_key}`)
       for (const s of f.sources ?? []) if (!validHttp(s.url)) throw new Error('bad source url')
     }
-    if (seen.size !== 12) throw new Error('duplicate/missing force')
+    if (seen.size !== FORCE_KEYS.length) throw new Error('duplicate/missing force')
     const lean = out.scenario_lean ?? {}
     const sum = ['A', 'B', 'C', 'D'].reduce((a, k) => a + (Number(lean[k]) || 0), 0)
     if (Math.abs(sum - 100) > 2) throw new Error(`lean sums to ${sum}`)

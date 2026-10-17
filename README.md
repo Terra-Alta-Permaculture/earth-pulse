@@ -63,7 +63,7 @@ Driven entirely by live client-side feeds (6-hour cache on the slow ones):
 - **Sonification** and a **shareable snapshot**, both generated in-browser.
 
 ### 🌐 World — the human systems pressing on the planet
-- **12 geopolitical forces**, each with a 0–10 tension score, direction, a
+- **13 geopolitical forces**, each with a 0–10 tension score, direction, a
   regeneration counterpoint, indicators and sources — plus a weekly brief, a
   world-tension meter, an A/B/C/D scenario lean and a signpost timeline.
 - **The widening circle of rights** — standalone panels for **wars & armed
