@@ -30,7 +30,7 @@ export interface WorldHuman {
   }
   culture?: {
     religion_note?: string; language_note?: string
-    indigenous_note?: string; medicine_note?: string; as_of?: string
+    indigenous_note?: string; medicine_note?: string; lineage_note?: string; as_of?: string
   }
   movements?: {
     protests_above?: { name: string; place?: string; note?: string }[]
