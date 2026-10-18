@@ -23,6 +23,9 @@ import { MotherLines } from './MotherLines'
 import { InfoCommons } from './InfoCommons'
 import { Deadliest } from './Deadliest'
 import { TwoPaths } from './TwoPaths'
+import { InnerWorld } from './InnerWorld'
+import { Peace } from './Peace'
+import { Surveillance } from './Surveillance'
 import { Collapsible } from '../Collapsible'
 import { SectionNav } from '../SectionNav'
 
@@ -33,7 +36,9 @@ const NAV_ITEMS = [
   { id: 'markets', label: '💰 Markets' },
   { id: 'info', label: '📡 Reality' },
   { id: 'deadliest', label: '🕯️ Deadliest' },
+  { id: 'surveillance', label: '🛰️ Surveil' },
   { id: 'health', label: '🦠 Health' },
+  { id: 'inner', label: '🧠 Inner' },
   { id: 'gender', label: '⚖ Gender' },
   { id: 'rights', label: '✊ Rights' },
   { id: 'children', label: '🧒 Children' },
@@ -42,6 +47,7 @@ const NAV_ITEMS = [
   { id: 'medicine', label: '⚕️ Medicine' },
   { id: 'protests', label: '✊ People' },
   { id: 'nature', label: '🌍 Nature' },
+  { id: 'peace', label: '🕊️ Peace' },
   { id: 'indigenous', label: '🪶 Indigenous' },
   { id: 'lineages', label: '🌕 Lineages' },
   { id: 'animals', label: '🐾 Animals' },
@@ -223,12 +229,14 @@ export function WorldPulsePage() {
         <Collapsible id="markets"><MarketsPanel live={human?.markets} /></Collapsible>
         <Collapsible id="info"><InfoCommons live={human?.culture} /></Collapsible>
         <Collapsible id="deadliest"><Deadliest /></Collapsible>
+        <Collapsible id="surveillance"><Surveillance /></Collapsible>
       </div>
 
       {/* ◑ The human floor — where people actually stand (social foundation) */}
       <div className={show('floor')}>
         <BandHeader tone="floor" title="◑ The human floor" desc="where people actually stand — met or short" />
         <Collapsible id="health"><HealthWatch live={human?.health} /></Collapsible>
+        <Collapsible id="inner"><InnerWorld /></Collapsible>
         <Collapsible id="gender"><GenderEquality /></Collapsible>
         <Collapsible id="rights"><HumanRights live={human?.human_rights} /></Collapsible>
         <Collapsible id="children"><ChildrensRights live={human?.children} /></Collapsible>
@@ -242,6 +250,7 @@ export function WorldPulsePage() {
         <BandHeader tone="above" title="↑ Above the line" desc="what regenerates, distributes & widens rights" />
         <Collapsible id="protests"><PeopleRising live={human?.movements} /></Collapsible>
         <Collapsible id="nature"><NatureRights live={human?.nature} /></Collapsible>
+        <Collapsible id="peace"><Peace /></Collapsible>
         <Collapsible id="indigenous"><IndigenousPeoples live={human?.culture} /></Collapsible>
         <Collapsible id="lineages"><MotherLines live={human?.culture} /></Collapsible>
         <Collapsible id="animals"><AnimalRights live={human?.animals} /></Collapsible>
