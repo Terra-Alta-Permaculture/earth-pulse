@@ -21,6 +21,8 @@ import { MedicinePanel } from './MedicinePanel'
 import { PeopleRising } from './PeopleRising'
 import { MotherLines } from './MotherLines'
 import { InfoCommons } from './InfoCommons'
+import { Deadliest } from './Deadliest'
+import { TwoPaths } from './TwoPaths'
 import { Collapsible } from '../Collapsible'
 import { SectionNav } from '../SectionNav'
 
@@ -30,6 +32,7 @@ const NAV_ITEMS = [
   { id: 'wars', label: '⚔ Wars' },
   { id: 'markets', label: '💰 Markets' },
   { id: 'info', label: '📡 Reality' },
+  { id: 'deadliest', label: '🕯️ Deadliest' },
   { id: 'health', label: '🦠 Health' },
   { id: 'gender', label: '⚖ Gender' },
   { id: 'rights', label: '✊ Rights' },
@@ -42,6 +45,7 @@ const NAV_ITEMS = [
   { id: 'indigenous', label: '🪶 Indigenous' },
   { id: 'lineages', label: '🌕 Lineages' },
   { id: 'animals', label: '🐾 Animals' },
+  { id: 'tech', label: '🧬 Tech' },
   { id: 'outlook', label: '🔭 Outlook' },
 ]
 
@@ -218,6 +222,7 @@ export function WorldPulsePage() {
         <Collapsible id="wars"><ActiveConflicts live={human?.conflicts} /></Collapsible>
         <Collapsible id="markets"><MarketsPanel live={human?.markets} /></Collapsible>
         <Collapsible id="info"><InfoCommons live={human?.culture} /></Collapsible>
+        <Collapsible id="deadliest"><Deadliest /></Collapsible>
       </div>
 
       {/* ◑ The human floor — where people actually stand (social foundation) */}
@@ -240,6 +245,7 @@ export function WorldPulsePage() {
         <Collapsible id="indigenous"><IndigenousPeoples live={human?.culture} /></Collapsible>
         <Collapsible id="lineages"><MotherLines live={human?.culture} /></Collapsible>
         <Collapsible id="animals"><AnimalRights live={human?.animals} /></Collapsible>
+        <Collapsible id="tech"><TwoPaths /></Collapsible>
       </div>
 
       {/* Scenario lean */}

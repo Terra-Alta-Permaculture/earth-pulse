@@ -190,7 +190,7 @@ const EMIT_TOOL = {
               info_note: { type: 'string' },
               as_of: { type: 'string' },
             },
-            required: ['indigenous_note'],
+            required: ['indigenous_note', 'info_note'],
           },
           movements: {
             type: 'object',
