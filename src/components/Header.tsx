@@ -41,14 +41,14 @@ export function Header({ tab, onTab, showLive, onRefresh }: Props) {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
           {/* Tab switch */}
           <div className="inline-flex rounded-xl border border-soil-600 bg-soil-800 p-1">
             {TABS.map((t) => (
               <button
                 key={t.key}
                 onClick={() => onTab(t.key)}
-                className={`rounded-lg px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-colors sm:py-1.5 ${
                   tab === t.key ? 'bg-moss-600 text-soil-950' : 'text-sand-400 hover:text-sand-100'
                 }`}
               >
@@ -63,7 +63,7 @@ export function Header({ tab, onTab, showLive, onRefresh }: Props) {
 
           {showLive && (
             <>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-moss-700/50 bg-moss-700/10 px-2.5 py-1 text-[0.65rem] font-medium text-moss-200">
+              <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-moss-700/50 bg-moss-700/10 px-2.5 py-1 text-[0.65rem] font-medium text-moss-200">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-moss-400 opacity-70 animate-pulse-ring" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-moss-400" />
@@ -72,7 +72,7 @@ export function Header({ tab, onTab, showLive, onRefresh }: Props) {
               </span>
               <button
                 onClick={onRefresh}
-                className="rounded-lg border border-soil-600 bg-soil-800 px-3 py-1.5 text-xs font-medium text-sand-300 transition-colors hover:bg-soil-700"
+                className="whitespace-nowrap rounded-lg border border-soil-600 bg-soil-800 px-3 py-2 text-xs font-medium text-sand-300 transition-colors hover:bg-soil-700 sm:py-1.5"
               >
                 Refresh
               </button>

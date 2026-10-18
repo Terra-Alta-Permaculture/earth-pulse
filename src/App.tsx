@@ -31,7 +31,8 @@ export default function App() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="app-safe">
+    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <Header
         tab={tab}
         onTab={changeTab}
@@ -61,6 +62,7 @@ export default function App() {
           ? 'EarthPulse · built on the thinking in NOVA by Pedro Valdjiu · Terra Alta, Sintra'
           : 'EarthPulse · live data from NOAA, USGS, NASA, Open-Meteo, GBIF & iNaturalist · scenarios & advice by Claude'}
       </footer>
+    </div>
     </div>
   )
 }
