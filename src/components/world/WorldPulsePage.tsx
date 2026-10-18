@@ -20,6 +20,7 @@ import { Faiths } from './Faiths'
 import { MedicinePanel } from './MedicinePanel'
 import { PeopleRising } from './PeopleRising'
 import { MotherLines } from './MotherLines'
+import { InfoCommons } from './InfoCommons'
 import { Collapsible } from '../Collapsible'
 import { SectionNav } from '../SectionNav'
 
@@ -28,6 +29,7 @@ const NAV_ITEMS = [
   { id: 'forces', label: '🧭 Forces' },
   { id: 'wars', label: '⚔ Wars' },
   { id: 'markets', label: '💰 Markets' },
+  { id: 'info', label: '📡 Reality' },
   { id: 'health', label: '🦠 Health' },
   { id: 'gender', label: '⚖ Gender' },
   { id: 'rights', label: '✊ Rights' },
@@ -215,6 +217,7 @@ export function WorldPulsePage() {
         </Collapsible>
         <Collapsible id="wars"><ActiveConflicts live={human?.conflicts} /></Collapsible>
         <Collapsible id="markets"><MarketsPanel live={human?.markets} /></Collapsible>
+        <Collapsible id="info"><InfoCommons live={human?.culture} /></Collapsible>
       </div>
 
       {/* ◑ The human floor — where people actually stand (social foundation) */}
