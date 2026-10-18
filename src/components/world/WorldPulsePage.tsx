@@ -28,9 +28,11 @@ import { Peace } from './Peace'
 import { Surveillance } from './Surveillance'
 import { Collapsible } from '../Collapsible'
 import { SectionNav } from '../SectionNav'
+import { WorldAtAGlance } from './WorldAtAGlance'
 
 // Ordered by the three bands: ↓ below · ◑ floor · ↑ above
 const NAV_ITEMS = [
+  { id: 'glance', label: '🌐 Glance' },
   { id: 'forces', label: '🧭 Forces' },
   { id: 'wars', label: '⚔ Wars' },
   { id: 'markets', label: '💰 Markets' },
@@ -180,6 +182,9 @@ export function WorldPulsePage() {
           <span>Systemic crisis</span>
         </div>
       </div>
+
+      {/* The world at a glance — people, countries, systems, the old left/right map */}
+      <Collapsible id="glance"><WorldAtAGlance /></Collapsible>
 
       {/* Vertical Politics lens — read the world below or above the line */}
       <div id="lens" className="scroll-mt-20">
