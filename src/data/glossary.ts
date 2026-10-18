@@ -138,6 +138,10 @@ export const GLOSSARY: Record<string, string> = {
   scenario_lean: 'Four possible futures, and how much this week’s news points to each. An educated guess, not a forecast.',
   signpost_updates: 'Events we were watching that have now happened, and what came of them.',
   signposts: 'Upcoming dates and events worth watching — they could push the world one way or another.',
+  lineages: 'Whose line you belong to — your father’s (patrilineal), your mother’s (matrilineal) or both. Counts come from the Ethnographic Atlas, a coding of 1,291 documented societies now kept open by D-PLACE.',
+  lineages_map: 'One dot per society in the Ethnographic Atlas, coloured by descent. Tap “Mother’s line only” to see where matrilineal societies cluster.',
+  lineages_power: 'Matrilineal is not the same as matriarchal. Lineage (whose line), residence (whose home) and authority (who decides) are separate — in many matrilineal societies, a woman’s brother holds the power and passes land to her son.',
+  lineages_living: 'A curated set of matrilineal cultures alive today, with how the mother’s line works there and what presses on it. The law score is the World Bank’s Women, Business & the Law index (1–100) for the country they live in.',
   // Your pulse
   your_pulse: 'Live conditions where you are — weather, air, heat, quakes nearby — plus local ways to get involved. Your location is only used to look these up, and only if you allow it. Nothing is saved.',
   // Act

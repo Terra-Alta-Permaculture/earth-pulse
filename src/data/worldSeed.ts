@@ -250,6 +250,25 @@ export const worldReadingsSeed: WorldReading[] = [
       { title: 'Oxfam — inequality', url: 'https://www.oxfam.org/en/tags/inequality' },
     ],
   },
+  {
+    week_start: SEED_WEEK_START,
+    force_key: 'shadow_war',
+    tension: 6.5,
+    direction: 'up',
+    headline: 'An undeclared war of spies, sabotage and hacking keeps widening',
+    what_changed:
+      'Below open war runs a covert one. Undersea cables and pipelines in the Baltic have been cut repeatedly since 2023, with ships linked to Russia’s shadow fleet suspected. European security services have tied a wave of arson, parcel-bomb plots and recruited saboteurs to Russian intelligence. Chinese state hackers (Salt Typhoon) broke deep into telecom networks worldwide, Israel’s exploding-pager strike on Hezbollah showed how far supply-chain sabotage can go, and targeted killings, commercial spyware and election-influence operations keep spreading — almost none of it ever formally acknowledged.',
+    counterpoint:
+      'Open-source investigators and journalists now expose covert operations within days, NATO launched Baltic Sentry to guard undersea infrastructure, and the Pall Mall Process brings states and companies together to rein in commercial spyware.',
+    indicators: [
+      { label: 'Binding treaties governing state cyber-operations', value: 0, as_of: '2026' },
+      { label: 'Countries hit by Salt Typhoon telecom hacking', value: '80+', as_of: '2025' },
+    ],
+    sources: [
+      { title: 'CSIS — Significant cyber incidents', url: 'https://www.csis.org/programs/strategic-technologies-program/significant-cyber-incidents' },
+      { title: 'NATO — Countering hybrid threats', url: 'https://www.nato.int/cps/en/natohq/topics_156338.htm' },
+    ],
+  },
 ]
 
 export const worldSignpostsSeed: WorldSignpost[] = [

@@ -12,7 +12,7 @@ export interface MapMarker {
   kind: string
 }
 
-// ── Below the line — the 12 World Pulse forces, as geographic hotspots ──
+// ── Below the line — the 13 World Pulse forces, as geographic hotspots ──
 export const FORCE_MARKERS: MapMarker[] = [
   { lat: 38.9, lon: -77.0, title: 'US power', note: 'Tariffs, force, alliance pressure', kind: 'force' },
   { lat: 24.5, lon: 119.5, title: 'US–China rivalry', note: 'Taiwan Strait, chips & minerals', kind: 'force' },
@@ -25,6 +25,7 @@ export const FORCE_MARKERS: MapMarker[] = [
   { lat: 28.4, lon: -80.6, title: 'Space race & orbit', note: 'Launch & satellite build-up', kind: 'force' },
   { lat: 31.5, lon: 34.47, title: 'Israel, the US & the world', note: 'Gaza & regional escalation', kind: 'force' },
   { lat: 46.8, lon: 9.83, title: 'The ruling elites', note: 'Concentrated wealth & power (Davos)', kind: 'force' },
+  { lat: 58.5, lon: 20.5, title: 'The shadow war', note: 'Baltic Sea — cut cables & sabotage', kind: 'force' },
   { lat: 40.7, lon: -74.0, title: 'Money, trade & sanctions', note: 'Dollar, debt & global finance', kind: 'force' },
 ]
 

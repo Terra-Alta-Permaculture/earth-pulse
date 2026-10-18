@@ -30,7 +30,7 @@ export interface WorldHuman {
   }
   culture?: {
     religion_note?: string; language_note?: string
-    indigenous_note?: string; medicine_note?: string; as_of?: string
+    indigenous_note?: string; medicine_note?: string; lineage_note?: string; as_of?: string
   }
   movements?: {
     protests_above?: { name: string; place?: string; note?: string }[]
@@ -115,6 +115,15 @@ export function useWorldPulse(): WorldPulseState {
           return
         }
         const { history, latest } = group(readings)
+        // A force added after the last weekly write has no live reading yet —
+        // show its seed card until the writer covers it, instead of hiding it.
+        const seed = group(worldReadingsSeed)
+        for (const k of Object.keys(seed.latest) as ForceKey[]) {
+          if (!latest[k]) {
+            latest[k] = seed.latest[k]
+            history[k] = seed.history[k]
+          }
+        }
         // Keep the curated signpost timeline, overlaying any live additions.
         const liveSp = (data.signposts ?? []) as WorldSignpost[]
         const liveTitles = new Set(liveSp.map((s) => s.title))

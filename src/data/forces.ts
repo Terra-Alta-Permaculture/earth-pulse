@@ -21,6 +21,7 @@ export const FORCES: ForceMeta[] = [
   { key: 'space_orbit', title: 'Space race & orbit', blurb: 'Military space, satellite mega-constellations, a legal vacuum, and orbital debris.', icon: '🛰️' },
   { key: 'israel_us', title: 'Israel, the US & the world', blurb: 'Gaza, US backing, regional escalation, and the world’s response — courts, protests, normalisation.', icon: '🕊️' },
   { key: 'elites', title: 'The ruling elites', blurb: 'Concentration of wealth and power — billionaires, lobbying, media and state capture.', icon: '🎩' },
+  { key: 'shadow_war', title: 'The shadow war', blurb: 'Spies, sabotage, cyber-attacks, assassinations and covert influence — the war that is never declared.', icon: '🕶️' },
 ]
 
 export const forceByKey = Object.fromEntries(
