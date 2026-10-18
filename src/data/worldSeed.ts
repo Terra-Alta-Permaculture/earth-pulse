@@ -30,7 +30,7 @@ const SRC = {
 export const worldWeeklySeed: WorldWeekly = {
   week_start: SEED_WEEK_START,
   summary:
-    'The world is at its most dangerous in decades. The US–Israel war on Iran has kept the Strait of Hormuz shut or nearly shut for seven months, and the Houthis now hold the Bab al-Mandab coast. Russia’s war on Ukraine has no ceasefire and its drones and sabotage reach NATO soil. A possibly record El Niño is stressing harvests in the same regions already at war, while arms control, the UN and the ICC are weaker than at any time since 1945.',
+    'The world feels more dangerous than it has in a generation. War between the US, Israel and Iran has choked the Gulf’s great oil route for months, and the fighting in Ukraine grinds on with no ceasefire in sight — its drones and sabotage now reaching into Europe. A fierce El Niño is straining harvests in the very places already at war, just as the UN, the courts and the old peace deals feel weaker than they have since the last world war.',
   scenario_lean: { A: 45, B: 25, C: 20, D: 10 },
   lean_rationale:
     'Both Washington and Tehran pay a high price for the Hormuz stalemate, and a phased deal is being discussed through Qatar, so managed bargaining (A) is most likely. The main risks are an Israeli strike on Iran’s nuclear work (B) and the collapse of the short US–China truces (C).',
