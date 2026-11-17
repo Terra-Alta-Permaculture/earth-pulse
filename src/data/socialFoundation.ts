@@ -130,7 +130,10 @@ export const FOUNDATION_STATUS: Record<FoundationStatus, { label: string; color:
 
 async function fetchWB(code: string): Promise<number | null> {
   try {
-    const res = await fetch(`https://api.worldbank.org/v2/country/WLD/indicator/${code}?format=json&mrnev=1`)
+    const res = await fetch(
+      `https://api.worldbank.org/v2/country/WLD/indicator/${code}?format=json&mrnev=1`,
+      { signal: AbortSignal.timeout(8000) }, // fail fast to fallback if WB hangs
+    )
     if (!res.ok) return null
     const d = await res.json()
     const v = d?.[1]?.[0]?.value

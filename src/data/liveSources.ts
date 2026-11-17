@@ -28,8 +28,9 @@ export interface LiveSignal {
 const nowIso = () => new Date().toISOString()
 const clamp01 = (n: number) => Math.max(0, Math.min(1, n))
 
-async function getJson(url: string) {
-  const res = await fetch(url)
+async function getJson(url: string, timeoutMs = 10000) {
+  // Abort a hung upstream (e.g. World Bank outages) instead of spinning forever.
+  const res = await fetch(url, { signal: AbortSignal.timeout(timeoutMs) })
   if (!res.ok) throw new Error(`${url} → ${res.status}`)
   return res.json()
 }
@@ -57,6 +58,7 @@ function ttl(key: string, fetcher: () => Promise<LiveSignal>, ms = SIX_HOURS) {
 export async function fetchCO2(): Promise<LiveSignal> {
   const res = await fetch(
     'https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv',
+    { signal: AbortSignal.timeout(10000) },
   )
   if (!res.ok) throw new Error(`NOAA CO2 → ${res.status}`)
   const text = await res.text()
@@ -178,6 +180,7 @@ export async function fetchWildfires(): Promise<LiveSignal> {
 export async function fetchMethane(): Promise<LiveSignal> {
   const res = await fetch(
     'https://gml.noaa.gov/webdata/ccgg/trends/ch4/ch4_mm_gl.txt',
+    { signal: AbortSignal.timeout(10000) },
   )
   if (!res.ok) throw new Error(`NOAA CH4 → ${res.status}`)
   const text = await res.text()
@@ -409,6 +412,7 @@ export async function fetchForestLoss(): Promise<LiveSignal> {
 export async function fetchSeaLevel(): Promise<LiveSignal> {
   const res = await fetch(
     'https://raw.githubusercontent.com/datasets/sea-level-rise/main/data/epa-sea-level.csv',
+    { signal: AbortSignal.timeout(10000) },
   )
   if (!res.ok) throw new Error(`sea level → ${res.status}`)
   const text = await res.text()

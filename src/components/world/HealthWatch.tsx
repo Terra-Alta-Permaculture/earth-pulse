@@ -13,6 +13,7 @@ async function fetchLifeExpectancy(): Promise<{ v: number; year: string; live: b
   try {
     const res = await fetch(
       'https://api.worldbank.org/v2/country/WLD/indicator/SP.DYN.LE00.IN?format=json&mrnev=1',
+      { signal: AbortSignal.timeout(8000) },
     )
     if (!res.ok) throw new Error()
     const d = await res.json()

@@ -21,7 +21,7 @@ const WB = (code: string) =>
 
 async function one(code: string): Promise<{ v: number; year: string } | null> {
   try {
-    const res = await fetch(WB(code))
+    const res = await fetch(WB(code), { signal: AbortSignal.timeout(8000) })
     if (!res.ok) return null
     const d = await res.json()
     const row = d?.[1]?.[0]

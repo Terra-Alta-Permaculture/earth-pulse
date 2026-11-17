@@ -48,6 +48,7 @@ async function loadLaw(): Promise<Record<string, LawScore>> {
   try {
     const res = await fetch(
       `https://api.worldbank.org/v2/country/${ISO.join(';')}/indicator/SG.LAW.INDX?format=json&mrnev=1&per_page=50`,
+      { signal: AbortSignal.timeout(8000) },
     )
     if (res.ok) {
       const d = await res.json()

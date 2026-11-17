@@ -12,6 +12,7 @@ async function fetchMortality(): Promise<{ v: number; year: string; live: boolea
   try {
     const res = await fetch(
       'https://api.worldbank.org/v2/country/WLD/indicator/SH.DYN.MORT?format=json&mrnev=1',
+      { signal: AbortSignal.timeout(8000) },
     )
     if (!res.ok) throw new Error()
     const d = await res.json()
