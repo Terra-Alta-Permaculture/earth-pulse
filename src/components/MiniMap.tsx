@@ -13,6 +13,10 @@ export interface MapPoint {
   color?: string
   title: string
   href?: string
+  /** Tap handler — makes the dot a button (used by the country finder). */
+  onClick?: () => void
+  /** Draw a highlight ring (selected item). */
+  active?: boolean
 }
 
 /** Small equirectangular world map with curated point markers. */
@@ -60,7 +64,8 @@ export function MiniMap({
                 stroke={color}
                 strokeOpacity="0.35"
                 strokeWidth={r * 0.7}
-                style={p.href ? { cursor: 'pointer' } : undefined}
+                style={p.href || p.onClick ? { cursor: 'pointer' } : undefined}
+                onClick={p.onClick}
               >
                 <title>
                   {p.title}
@@ -68,6 +73,18 @@ export function MiniMap({
                 </title>
               </circle>
             )
+            const hit = p.onClick ? (
+              <circle cx={px(p.lon).toFixed(1)} cy={py(p.lat).toFixed(1)} r={r + 3.5} fill="transparent" style={{ cursor: 'pointer' }} onClick={p.onClick} />
+            ) : null
+            if (p.active || hit) {
+              return (
+                <g key={i}>
+                  {marker}
+                  {p.active && <circle cx={px(p.lon).toFixed(1)} cy={py(p.lat).toFixed(1)} r={r + 2.2} fill="none" stroke="#f3ead8" strokeWidth="0.7" pointerEvents="none" />}
+                  {hit}
+                </g>
+              )
+            }
             if (!p.href) return marker
             const external = !p.href.startsWith('#')
             return (

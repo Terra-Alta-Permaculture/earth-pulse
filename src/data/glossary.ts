@@ -153,6 +153,11 @@ export const GLOSSARY: Record<string, string> = {
   lineages_map: 'One dot per society in the Ethnographic Atlas, coloured by descent. Tap “Mother’s line only” to see where matrilineal societies cluster.',
   lineages_power: 'Matrilineal is not the same as matriarchal. Lineage (whose line), residence (whose home) and authority (who decides) are separate — in many matrilineal societies, a woman’s brother holds the power and passes land to her son.',
   lineages_living: 'A curated set of matrilineal cultures alive today, with how the mother’s line works there and what presses on it. The law score is the World Bank’s Women, Business & the Law index (1–100) for the country they live in.',
+  glance: 'The basics: how many people are alive, how many countries there are, how they are governed, who sits in the big clubs — and a card for any country you tap.',
+  glance_regimes: 'V-Dem’s “Regimes of the World”: liberal democracy, electoral democracy, electoral autocracy (elections, but not free or fair) and closed autocracy. Switch between counting countries and counting people — the picture changes a lot.',
+  glance_leftright: 'The left/right axis most news uses. Shown for reference only: EarthPulse reads power above or below the line instead, because left and right governments can both extract or regenerate. Coded from each government’s party family; one-party states, juntas, monarchies and theocracies don’t fit the axis.',
+  glance_clubs: 'The groups where the biggest decisions get made. Compare each club’s share of humanity with its share of the world economy.',
+  glance_country: 'Search or tap a dot to see one country: people, income per person, how it is governed, who holds power, and which clubs it belongs to.',
   // Your pulse
   your_pulse: 'Live conditions where you are — weather, air, heat, quakes nearby — plus local ways to get involved. Your location is only used to look these up, and only if you allow it. Nothing is saved.',
   // Act
