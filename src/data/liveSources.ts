@@ -39,18 +39,29 @@ async function getJson(url: string, timeoutMs = 10000) {
 // minute to minute, so we cache them for a few hours. This keeps the app's
 // auto-refresh from hammering World Bank (which rate-limits) while real-time
 // feeds — quakes, Kp, air quality — keep refreshing every cycle.
-const _ttlCache = new Map<string, { at: number; p: Promise<LiveSignal> }>()
+const _ttlCache = new Map<string, { at: number; ok: boolean; p: Promise<LiveSignal> }>()
 const SIX_HOURS = 6 * 60 * 60 * 1000
+// After a source fails (e.g. a World Bank outage), back off before hitting it
+// again instead of re-requesting every refresh cycle — callers fall back to
+// last-known values during the cooldown. Short enough to recover promptly once
+// the source is healthy again.
+const FAIL_COOLDOWN = 10 * 60 * 1000
 function ttl(key: string, fetcher: () => Promise<LiveSignal>, ms = SIX_HOURS) {
   return () => {
     const hit = _ttlCache.get(key)
-    if (hit && Date.now() - hit.at < ms) return hit.p
-    const p = fetcher().catch((e) => {
-      _ttlCache.delete(key) // don't cache failures — retry next cycle
+    if (hit) {
+      const age = Date.now() - hit.at
+      // fresh success → reuse; recent failure → stay backed off, don't retry yet
+      if (hit.ok ? age < ms : age < FAIL_COOLDOWN) return hit.p
+    }
+    const entry = { at: Date.now(), ok: true, p: null as unknown as Promise<LiveSignal> }
+    entry.p = fetcher().catch((e) => {
+      entry.ok = false
+      entry.at = Date.now() // start the cooldown from the moment it failed
       throw e
     })
-    _ttlCache.set(key, { at: Date.now(), p })
-    return p
+    _ttlCache.set(key, entry)
+    return entry.p
   }
 }
 

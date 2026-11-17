@@ -144,35 +144,47 @@ async function fetchWB(code: string): Promise<number | null> {
 }
 
 let _cache: { at: number; data: ResolvedDimension[] } | null = null
+let _inflight: Promise<ResolvedDimension[]> | null = null
 const SIX_HOURS = 6 * 60 * 60 * 1000
 
 async function loadFoundation(): Promise<ResolvedDimension[]> {
   if (_cache && Date.now() - _cache.at < SIX_HOURS) return _cache.data
+  // De-dupe concurrent callers (several panels mount at once) so a World Bank
+  // outage is hit by one batch of requests, not one batch per panel.
+  if (_inflight) return _inflight
 
-  const resolved = await Promise.all(
-    DIMENSIONS.map(async (d): Promise<ResolvedDimension> => {
-      // Static dimension
-      if (d.staticShortfall != null) {
+  _inflight = (async () => {
+    const resolved = await Promise.all(
+      DIMENSIONS.map(async (d): Promise<ResolvedDimension> => {
+        // Static dimension
+        if (d.staticShortfall != null) {
+          return {
+            key: d.key, name: d.name, desc: d.desc,
+            shortfall: d.staticShortfall, status: classify(d.staticShortfall),
+            context: d.staticContext ?? '', source: d.source, live: false,
+          }
+        }
+        // Live dimension (fall back to the latest known value on failure).
+        // Skip the fetch entirely for indicators WB serves without CORS headers.
+        const v = d.code && !d.noFetch ? await fetchWB(d.code) : null
+        const value = v ?? d.fallbackValue ?? 0
+        const shortfall = Math.max(0, Math.min(100, d.shortfall(value)))
         return {
           key: d.key, name: d.name, desc: d.desc,
-          shortfall: d.staticShortfall, status: classify(d.staticShortfall),
-          context: d.staticContext ?? '', source: d.source, live: false,
+          shortfall, status: classify(shortfall),
+          context: d.context(value), source: d.source, live: v != null,
         }
-      }
-      // Live dimension (fall back to the latest known value on failure).
-      // Skip the fetch entirely for indicators WB serves without CORS headers.
-      const v = d.code && !d.noFetch ? await fetchWB(d.code) : null
-      const value = v ?? d.fallbackValue ?? 0
-      const shortfall = Math.max(0, Math.min(100, d.shortfall(value)))
-      return {
-        key: d.key, name: d.name, desc: d.desc,
-        shortfall, status: classify(shortfall),
-        context: d.context(value), source: d.source, live: v != null,
-      }
-    }),
-  )
-  _cache = { at: Date.now(), data: resolved }
-  return resolved
+      }),
+    )
+    _cache = { at: Date.now(), data: resolved }
+    return resolved
+  })()
+
+  try {
+    return await _inflight
+  } finally {
+    _inflight = null
+  }
 }
 
 export function useSocialFoundation(): { dims: ResolvedDimension[]; loading: boolean } {
